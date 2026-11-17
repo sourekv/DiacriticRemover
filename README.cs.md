@@ -1,6 +1,6 @@
 # TcAccents – diakritika v názvech souborů pro Total Commander
 
-Česky | [English](README.md)
+Česky | [English](README.en.md) | [Shrnutí](README.md)
 
 Obsahový plugin (WDX) pro Total Commander. Odstraní nebo doplní českou
 diakritiku v názvech souborů a složek. Používá se v nástroji

@@ -1,7 +1,7 @@
 @echo off
 rem Builds TcAccents.wdx (32-bit), TcAccents.wdx64 (64-bit), the dictionary,
 rem the test programs and the install zip into out\.
-rem Prerequisites: see README.md, section "Building from source".
+rem Prerequisites: see README.en.md, section "Building from source".
 setlocal
 cd /d "%~dp0"
 
@@ -47,7 +47,7 @@ endlocal
 rem ---- Install zip -------------------------------------------------------
 copy /y dist\pluginst.inf out\ >nul
 copy /y README.cs.md out\readme.txt >nul
-copy /y README.md out\readme_en.txt >nul
+copy /y README.en.md out\readme_en.txt >nul
 if exist out\TcAccents.zip del out\TcAccents.zip
 powershell -NoProfile -Command "Compress-Archive -Path out\TcAccents.wdx,out\TcAccents.wdx64,out\TcAccents.dic,dist\TcAccents.user.txt,out\pluginst.inf,out\readme.txt,out\readme_en.txt -DestinationPath out\TcAccents.zip" || exit /b 1
 echo Build OK: out\TcAccents.zip
