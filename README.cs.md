@@ -23,6 +23,11 @@ a změnu můžete vrátit.
    správce. Objeví se hláška „Access denied“. Zvolte **As Administrator**
    a potvrďte dotaz Windows.
 
+**Slovník je součástí pluginu.** Soubor `TcAccents.dic` je v instalačním
+archivu a při instalaci se zkopíruje do složky pluginu vedle
+`TcAccents.wdx` a `TcAccents.wdx64`. Nic dalšího se nestahuje. Plugin hledá
+slovník i vlastní slovník `TcAccents.user.txt` vždy ve své složce.
+
 **Aktualizace na novou verzi:** stejný postup. Na dotaz, zda přepsat
 existující plugin, odpovězte **Yes**. Pokud přepsání selže, protože je
 plugin načtený, zavřete Total Commander a soubory z archivu nakopírujte do

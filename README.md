@@ -10,7 +10,8 @@ before renaming and Undo afterwards.
 
 Install: download `TcAccents.zip` from
 [Releases](https://github.com/sourekv/TcAccents/releases), press Enter on it
-in Total Commander and confirm. Then use the mask
+in Total Commander and confirm. The dictionary is part of the plugin, nothing
+else is downloaded. Then use the mask
 `[=tcaccents.Nazev bez diakritiky]` or `[=tcaccents.Nazev s diakritikou]`
 in Ctrl+M.
 
@@ -28,7 +29,8 @@ před přejmenováním a možností vrátit změnu tlačítkem Undo.
 
 Instalace: stáhněte `TcAccents.zip` z
 [Releases](https://github.com/sourekv/TcAccents/releases), v Total Commanderu
-na něm stiskněte Enter a potvrďte. Pak v Ctrl+M použijte masku
+na něm stiskněte Enter a potvrďte. Slovník je součástí pluginu, nic dalšího
+se nestahuje. Pak v Ctrl+M použijte masku
 `[=tcaccents.Nazev bez diakritiky]` nebo `[=tcaccents.Nazev s diakritikou]`.
 
 Podrobný návod česky: [README.cs.md](README.cs.md)

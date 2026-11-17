@@ -26,6 +26,12 @@ Adding them uses a Czech dictionary, so it only makes sense for Czech names.
    administrator rights. An "Access denied" message appears. Choose
    **As Administrator** and confirm the Windows prompt.
 
+**The dictionary is part of the plugin.** The file `TcAccents.dic` is in
+the install archive and is copied into the plugin folder next to
+`TcAccents.wdx` and `TcAccents.wdx64`. Nothing else is downloaded. The
+plugin always looks for the dictionary and the user dictionary
+`TcAccents.user.txt` in its own folder.
+
 **Updating to a new version:** same steps. When asked whether to overwrite
 the existing plugin, answer **Yes**. If overwriting fails because the plugin
 is loaded, close Total Commander and copy the files from the archive into
