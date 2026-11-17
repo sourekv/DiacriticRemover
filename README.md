@@ -122,7 +122,22 @@ projeví po restartu Total Commanderu.
 
 ## 6. Sestavení ze zdrojů
 
-Potřeba je Visual Studio 2026 (C++) a Python 3.
+### Předpoklady
+
+| Co | Poznámka |
+|---|---|
+| Windows 10 (1803) nebo novější | kvůli `curl` a PowerShellu, které jsou součástí systému |
+| Visual Studio 2022 nebo novější s úlohou **Vývoj desktopových aplikací v C++** | stačí Community nebo Build Tools. Potřeba jsou překladače MSVC pro x64 i x86 (u této úlohy výchozí) a Windows SDK. Ověřeno s Visual Studiem 2026 Community (MSVC 14.52, Windows SDK 10.0.26100). |
+| Python 3.9 nebo novější | příkaz `python` musí být v PATH. Jen standardní knihovna, nic dalšího se neinstaluje. |
+| Připojení k internetu | jen při prvním sestavení, kvůli stažení seznamu slov (21 MB) |
+| Asi 60 MB místa na disku | seznam slov, slovník a výstupy v `out\` |
+
+Visual Studio skript najde sám (přes `vswhere.exe`). Je-li nainstalované
+jinde nebo chcete použít konkrétní verzi, nastavte předem proměnnou
+`VCVARS` na cestu k `vcvarsall.bat`. Když něco z předpokladů chybí, skript
+to na začátku ohlásí.
+
+### Sestavení
 
 ```bash
 build.cmd
