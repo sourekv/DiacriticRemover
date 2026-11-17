@@ -15,6 +15,11 @@ else is downloaded. Then use the mask
 `[=tcaccents.Nazev bez diakritiky]` or `[=tcaccents.Nazev s diakritikou]`
 in Ctrl+M.
 
+The dictionary is derived from the Czech word list of
+[FrequencyWords](https://github.com/hermitdave/FrequencyWords) by Hermit Dave,
+built from the OpenSubtitles2018 corpus ([OPUS](https://opus.nlpl.eu/)).
+Thanks to them. The dictionary is licensed CC BY-SA 4.0.
+
 Full guide in English: [README.en.md](README.en.md)
 
 ---
@@ -32,5 +37,10 @@ Instalace: stáhněte `TcAccents.zip` z
 na něm stiskněte Enter a potvrďte. Slovník (`TcAccents.dic`) je součástí pluginu, nic dalšího
 se nestahuje. Pak v Ctrl+M použijte masku
 `[=tcaccents.Nazev bez diakritiky]` nebo `[=tcaccents.Nazev s diakritikou]`.
+
+Slovník je odvozený z českého seznamu slov projektu
+[FrequencyWords](https://github.com/hermitdave/FrequencyWords) (Hermit Dave),
+sestaveného z korpusu OpenSubtitles2018 ([OPUS](https://opus.nlpl.eu/)).
+Děkujeme. Slovník je pod licencí CC BY-SA 4.0.
 
 Podrobný návod česky: [README.cs.md](README.cs.md)

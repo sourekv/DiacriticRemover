@@ -44,7 +44,10 @@ def main(src: str, dst: str, min_count: int = 1) -> None:
     rows = sorted((k, w) for k, (_, w) in best.items() if k != w)
     with open(dst, "w", encoding="utf-8", newline="\n") as f:
         f.write("# TcAccents dictionary, generated from %s\n" % src.replace("\\", "/").split("/")[-1])
-        f.write("# Source: FrequencyWords by Hermit Dave, CC BY-SA 4.0\n")
+        f.write("# Source: FrequencyWords by Hermit Dave (https://github.com/hermitdave/FrequencyWords),\n")
+        f.write("# computed from the OpenSubtitles2018 corpus (OPUS, https://opus.nlpl.eu/).\n")
+        f.write("# Thanks to the authors. License: CC BY-SA 4.0,\n")
+        f.write("# https://creativecommons.org/licenses/by-sa/4.0/\n")
         for k, w in rows:
             f.write(f"{k}\t{w}\n")
     print(f"{len(best)} words, {len(rows)} entries with diacritics -> {dst}")

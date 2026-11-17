@@ -159,5 +159,21 @@ a instalační archiv `out\TcAccents.zip`. Test:
 out\test64.exe out\TcAccents.wdx64
 ```
 
-Slovník vychází z [FrequencyWords](https://github.com/hermitdave/FrequencyWords)
-(Hermit Dave), licence CC BY-SA 4.0.
+## 7. Poděkování
+
+Doplňování diakritiky by nebylo možné bez práce těchto autorů:
+
+- **Hermit Dave** a projekt
+  [FrequencyWords](https://github.com/hermitdave/FrequencyWords), ze
+  kterého pochází český frekvenční seznam slov `cs_full.txt`. Obsah je pod
+  licencí [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+- **Korpus OpenSubtitles2018** z projektu [OPUS](https://opus.nlpl.eu/)
+  (Pierre Lison, Jörg Tiedemann, Milen Kouylekov), ze kterého byl seznam
+  slov spočítán, a web [OpenSubtitles.org](https://www.opensubtitles.org/),
+  odkud pocházejí titulky.
+
+Děkujeme.
+
+Slovník `TcAccents.dic` je z tohoto seznamu odvozený (slova s aspoň
+3 výskyty, u každého jen nejčastější tvar s diakritikou), a proto je stejně
+jako zdroj šířen pod licencí CC BY-SA 4.0.

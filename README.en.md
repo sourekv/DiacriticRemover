@@ -163,6 +163,23 @@ programs and the install archive `out\TcAccents.zip`. Test:
 out\test64.exe out\TcAccents.wdx64
 ```
 
-The dictionary is based on
-[FrequencyWords](https://github.com/hermitdave/FrequencyWords)
-(Hermit Dave), licensed CC BY-SA 4.0.
+## 7. Credits
+
+Adding diacritics would not be possible without the work of:
+
+- **Hermit Dave** and the
+  [FrequencyWords](https://github.com/hermitdave/FrequencyWords) project,
+  the source of the Czech word frequency list `cs_full.txt`. The content is
+  licensed under
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+- **The OpenSubtitles2018 corpus** from the [OPUS](https://opus.nlpl.eu/)
+  project (Pierre Lison, Jörg Tiedemann, Milen Kouylekov), from which the
+  word list was computed, and
+  [OpenSubtitles.org](https://www.opensubtitles.org/), where the subtitles
+  come from.
+
+Thank you.
+
+The dictionary `TcAccents.dic` is derived from this list (words seen at
+least 3 times, keeping only the most frequent form with diacritics for each
+word), so like its source it is distributed under CC BY-SA 4.0.
