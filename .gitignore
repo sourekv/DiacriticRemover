@@ -1,0 +1,3 @@
+out/
+# Downloaded word lists (build.cmd fetches cs_full.txt when missing)
+data/src/
