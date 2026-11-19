@@ -152,8 +152,19 @@ build.cmd
 
 Skript stáhne seznam slov `data\src\cs_full.txt` (21 MB, není v gitu),
 pokud ještě chybí, sestaví z něj slovník (slova s aspoň 3 výskyty),
-32bitový `TcAccents.wdx`, 64bitový `TcAccents.wdx64`, testovací programy
-a instalační archiv `out\TcAccents.zip`. Test:
+32bitový `TcAccents.wdx`, 64bitový `TcAccents.wdx64`, testovací programy,
+instalační archiv `out\TcAccents.zip` a diagnostický archiv
+`out\TcAccents-diag.zip` (`diagnose.cmd` a testovací programy pro hledání
+chyb při načítání pluginu na jiném počítači).
+
+Slovník obsahuje jen tvary s diakritikou. Tvar bez diakritiky si plugin
+odvodí sám. Slova jsou seřazená a předponově kódovaná: každý řádek začíná
+znakem, který udává, kolik písmen má slovo společných s předchozím, a za
+ním následuje zbytek slova. Čitelné je jen záhlaví se zdrojem a licencí.
+Citoslovce z titulků se třemi stejnými písmeny za sebou („aaa“, „nooo“)
+se vynechávají. Popis formátu je v `tools/build_dict.py`.
+
+Test:
 
 ```bash
 out\test64.exe out\TcAccents.wdx64

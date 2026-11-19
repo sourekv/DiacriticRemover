@@ -157,7 +157,19 @@ build.cmd
 The script downloads the word list `data\src\cs_full.txt` (21 MB, not in
 git) if it is missing, builds the dictionary from it (words seen at least
 3 times), the 32-bit `TcAccents.wdx`, the 64-bit `TcAccents.wdx64`, test
-programs and the install archive `out\TcAccents.zip`. Test:
+programs, the install archive `out\TcAccents.zip` and the diagnostic archive
+`out\TcAccents-diag.zip` (`diagnose.cmd` and the test programs, for tracking
+down plugin load errors on another computer).
+
+The dictionary holds only the forms with diacritics; the plugin derives the
+form without diacritics itself. Words are sorted and prefix-coded: each line
+starts with a character giving how many letters the word shares with the
+previous one, followed by the rest of the word. Only the header with the
+source and license is human-readable. Interjections from subtitles with
+three equal letters in a row ("aaa", "nooo") are left out. The format is
+described in `tools/build_dict.py`.
+
+Test:
 
 ```bash
 out\test64.exe out\TcAccents.wdx64

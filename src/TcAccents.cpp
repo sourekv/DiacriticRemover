@@ -148,9 +148,55 @@ static std::wstring_view Trim(std::wstring_view s) {
 //   plain=accented         (user file)
 //   accented               (user file; key = word without diacritics)
 //   # comment
+// Prefix-coded dictionary (tools/build_dict.py, "# format: prefix-coded v1"):
+// each non-comment line is chr('0' + n) followed by the rest of the word,
+// n = number of leading characters shared with the previous word. Only the
+// lowercase form with diacritics is stored; the key is derived here.
+static void LoadPrefixCoded(std::wstring_view text, size_t expected) {
+    std::wstring values, keys;
+    values.reserve(text.size() * 2);
+    std::vector<std::pair<size_t, size_t>> spans;  // offset, length (same in both)
+    spans.reserve(expected);
+    std::wstring prev, word;
+    size_t pos = 0;
+    while (pos < text.size()) {
+        size_t eol = text.find(L'\n', pos);
+        if (eol == std::wstring_view::npos) eol = text.size();
+        std::wstring_view line = text.substr(pos, eol - pos);
+        pos = eol + 1;
+        if (!line.empty() && line.back() == L'\r') line.remove_suffix(1);
+        if (line.empty() || line[0] == L'#') continue;
+        size_t shared = (size_t)(line[0] - L'0');
+        if (line[0] < L'0' || shared > prev.size()) continue;  // damaged line
+        word.assign(prev, 0, shared);
+        word.append(line.substr(1));
+        std::wstring key = StripAccents(word);
+        if (key.size() == word.size()) {
+            spans.emplace_back(values.size(), word.size());
+            values += word;
+            keys += key;
+        }
+        prev.swap(word);
+    }
+    values.shrink_to_fit();
+    keys.shrink_to_fit();
+    g_store.push_back(std::move(values));
+    const std::wstring& v = g_store.back();
+    g_store.push_back(std::move(keys));
+    const std::wstring& k = g_store.back();
+    g_dict.reserve(g_dict.size() + spans.size());
+    for (auto& s : spans)
+        g_dict[std::wstring_view(k).substr(s.first, s.second)] =
+            std::wstring_view(v).substr(s.first, s.second);
+}
+
 static void LoadDictFile(const std::wstring& path, size_t expected) {
     std::wstring tmp;
     if (!ReadUtf8File(path, tmp)) return;
+    if (tmp.find(L"# format: prefix-coded v1") != std::wstring::npos) {
+        LoadPrefixCoded(tmp, expected);
+        return;
+    }
     if (!tmp.empty()) CharLowerBuffW(&tmp[0], (DWORD)tmp.size());
     g_store.push_back(std::move(tmp));
     std::wstring_view text = g_store.back();
