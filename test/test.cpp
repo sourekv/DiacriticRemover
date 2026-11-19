@@ -24,7 +24,17 @@ int wmain(int argc, wchar_t** argv) {
     SetConsoleOutputCP(CP_UTF8);
     if (argc < 2) { fputs("usage: test <plugin> [names]\n", stderr); return 2; }
     HMODULE h = LoadLibraryW(argv[1]);
-    if (!h) { fprintf(stderr, "LoadLibrary failed: %lu\n", GetLastError()); return 1; }
+    if (!h) {
+        DWORD err = GetLastError();
+        wchar_t msg[512] = L"";
+        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, nullptr, err,
+                       0, msg, 512, nullptr);
+        printf("LoadLibrary failed: error %lu: ", err);
+        Print(msg);
+        Print(L"\n");
+        return 1;
+    }
+    printf("LoadLibrary OK (%s process)\n", sizeof(void*) == 8 ? "64-bit" : "32-bit");
     auto getField = (GetFieldFn)GetProcAddress(h, "ContentGetSupportedField");
     auto getValue = (GetValueWFn)GetProcAddress(h, "ContentGetValueW");
     if (!getField || !getValue || !GetProcAddress(h, "ContentGetValue")) {

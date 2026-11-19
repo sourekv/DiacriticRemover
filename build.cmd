@@ -50,7 +50,11 @@ copy /y README.cs.md out\readme_cs.txt >nul
 copy /y README.en.md out\readme_en.txt >nul
 if exist out\TcAccents.zip del out\TcAccents.zip
 powershell -NoProfile -Command "Compress-Archive -Path out\TcAccents.wdx,out\TcAccents.wdx64,out\TcAccents.dic,dist\TcAccents.user.txt,out\pluginst.inf,out\readme_cs.txt,out\readme_en.txt -DestinationPath out\TcAccents.zip" || exit /b 1
-echo Build OK: out\TcAccents.zip
+
+rem ---- Diagnostic zip (issue #1): batch + test programs, no PowerShell needed
+if exist out\TcAccents-diag.zip del out\TcAccents-diag.zip
+powershell -NoProfile -Command "Compress-Archive -Path tools\diagnose.cmd,out\test32.exe,out\test64.exe -DestinationPath out\TcAccents-diag.zip" || exit /b 1
+echo Build OK: out\TcAccents.zip, out\TcAccents-diag.zip
 exit /b 0
 
 :no_vs
