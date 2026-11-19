@@ -53,7 +53,7 @@ powershell -NoProfile -Command "Compress-Archive -Path out\TcAccents.wdx,out\TcA
 
 rem ---- Diagnostic zip (issue #1): batch + test programs, no PowerShell needed
 if exist out\TcAccents-diag.zip del out\TcAccents-diag.zip
-powershell -NoProfile -Command "Compress-Archive -Path tools\diagnose.cmd,out\test32.exe,out\test64.exe -DestinationPath out\TcAccents-diag.zip" || exit /b 1
+powershell -NoProfile -Command "Compress-Archive -Path tools\diagnose.cmd -DestinationPath out\TcAccents-diag.zip" || exit /b 1
 echo Build OK: out\TcAccents.zip, out\TcAccents-diag.zip
 exit /b 0
 
