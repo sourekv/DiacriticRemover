@@ -13,7 +13,8 @@ can undo the change.
 | `Cesky Krumlov - zluty kun.jpg` | – | `Český Krumlov - žlutý kůň.jpg` |
 | `SKOLA_dite_2024.pdf` | – | `ŠKOLA_dítě_2024.pdf` |
 
-Removing diacritics works for all Latin letters (also ł, ø, ß and others).
+Removing diacritics works for Latin letters of all languages (also ł, ø, ß
+and others, details in [docs/stripping.en.md](docs/stripping.en.md)).
 Adding them uses a Czech dictionary, so it only makes sense for Czech names.
 
 ## 1. Installation

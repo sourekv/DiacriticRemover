@@ -13,6 +13,10 @@ a změnu můžete vrátit.
 | `Cesky Krumlov - zluty kun.jpg` | – | `Český Krumlov - žlutý kůň.jpg` |
 | `SKOLA_dite_2024.pdf` | – | `ŠKOLA_dítě_2024.pdf` |
 
+Diakritiku odstraní z latinkových písmen všech jazyků (i ł, ø, ß a další,
+podrobnosti v [docs/stripping.cs.md](docs/stripping.cs.md)). Doplňování
+funguje podle českého slovníku, takže má smysl jen pro české názvy.
+
 ## 1. Instalace
 
 1. V Total Commanderu najeďte na soubor `wdx_diacritics.zip` a stiskněte Enter.
