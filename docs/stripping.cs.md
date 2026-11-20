@@ -16,7 +16,7 @@ z bloků Unicode:
 
 Každé písmeno, které Windows rozloží (normalizace NFD) na základní písmeno
 bez diakritiky a diakritická znaménka, nahradí tím základním písmenem.
-Velikost písmen zůstává. Tak se převede 500 písmen, mimo jiné pro tyto
+Velikost písmen zůstává. Spolu se zvláštními případy níže se převede 515 písmen, mimo jiné pro tyto
 jazyky:
 
 | Jazyk | Příklady |
@@ -41,10 +41,19 @@ převádí podle vlastní tabulky:
 | Đ đ | D d |
 | Ł ł | L l |
 | Ø ø | O o |
+| Ħ ħ (maltština) | H h |
+| Ŀ ŀ (katalánština) | L l |
+| Ŧ ŧ (sámské jazyky) | T t |
+| Ǿ ǿ | O o |
 | ı (turecké i bez tečky) | i |
+| Ǆ ǅ ǆ (dž jako jeden znak) | DZ Dz dz |
 | ß | ss |
-| Æ æ | AE ae |
+| Æ æ, Ǣ ǣ, Ǽ ǽ | AE ae |
 | Œ œ | OE oe |
+
+Spřežky a samostatná písmena bez diakritiky (ĳ, lj, nj, þ, ð a další) plugin
+nemění, protože nejde o diakritiku. Výjimkou jsou ß, æ a œ, které plugin
+převádí odjakživa.
 
 Samostatná diakritická znaménka (U+0300 až U+036F) plugin vynechá. Objevují
 se v názvech souborů zkopírovaných z macOS, kde se písmeno ukládá jako
@@ -56,19 +65,15 @@ základní písmeno a za ním znaménko.
   o přepis do latinky, a ten plugin nedělá.
 - **Číslice, interpunkce a symboly** (–, „“, ©, € a podobně).
 - **Latinková písmena, která se nerozkládají a nejsou v tabulce výše.** Je
-  jich 154, většinou jde o fonetické nebo historické znaky. Z písmen
-  živých jazyků sem patří:
+  jich 139, většinou jde o fonetické nebo historické znaky. Z písmen
+  živých jazyků sem patří samostatná písmena a spřežky bez diakritiky:
 
 | Znak | Jazyk | Poznámka |
 |---|---|---|
-| Ð ð | islandština, faerština | Ð se v chorvatštině někdy používá místo Đ |
-| Þ þ | islandština | |
-| Ħ ħ | maltština | |
+| Ð ð, Þ þ | islandština, faerština | samostatná písmena; Ð se v chorvatštině někdy píše místo Đ |
 | Ĳ ĳ | nizozemština | spřežka |
-| Ŀ ŀ | katalánština | |
-| Ŋ ŋ, Ŧ ŧ | sámské jazyky | |
-| Ǆ ǅ ǆ, Ǉ ǈ ǉ, Ǌ ǋ ǌ | chorvatština, srbština (latinka) | spřežky dž, lj, nj v jednom znaku, v běžném textu vzácné |
-| Ǽ ǽ, Ǿ ǿ | dánština, norština (historicky) | |
+| Ŋ ŋ | sámské jazyky | samostatné písmeno |
+| Ǉ ǈ ǉ, Ǌ ǋ ǌ, Ǳ ǲ ǳ | chorvatština, srbština (latinka) | spřežky lj, nj, dz v jednom znaku |
 | ẞ | němčina | velké ß |
 
 ## Srovnání s ClipDiac

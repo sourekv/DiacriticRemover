@@ -17,7 +17,7 @@ these Unicode blocks:
 
 Every letter that Windows decomposes (NFD normalization) into a base letter
 without diacritics plus combining marks is replaced by that base letter.
-Upper and lower case is kept. This covers 500 letters, among others for
+Upper and lower case is kept. Together with the special cases below, this covers 515 letters, among others for
 these languages:
 
 | Language | Examples |
@@ -42,10 +42,19 @@ them with its own table:
 | Đ đ | D d |
 | Ł ł | L l |
 | Ø ø | O o |
+| Ħ ħ (Maltese) | H h |
+| Ŀ ŀ (Catalan) | L l |
+| Ŧ ŧ (Sámi languages) | T t |
+| Ǿ ǿ | O o |
 | ı (Turkish dotless i) | i |
+| Ǆ ǅ ǆ (dž as one character) | DZ Dz dz |
 | ß | ss |
-| Æ æ | AE ae |
+| Æ æ, Ǣ ǣ, Ǽ ǽ | AE ae |
 | Œ œ | OE oe |
+
+Ligatures and separate letters without diacritics (ĳ, lj, nj, þ, ð and
+others) are left unchanged, because they carry no diacritics. The exceptions
+are ß, æ and œ, which the plugin has always converted.
 
 Stand-alone combining marks (U+0300 to U+036F) are dropped. They appear in
 file names copied from macOS, which stores a letter as the base letter
@@ -57,19 +66,16 @@ followed by the mark.
   transliteration to Latin, which the plugin does not do.
 - **Digits, punctuation and symbols** (–, „“, ©, € and so on).
 - **Latin letters that do not decompose and are not in the table above.**
-  There are 154 of them, mostly phonetic or historic characters. Letters of
-  living languages among them:
+  There are 139 of them, mostly phonetic or historic characters. Letters of
+  living languages among them are separate letters and digraphs without
+  diacritics:
 
 | Character | Language | Note |
 |---|---|---|
-| Ð ð | Icelandic, Faroese | Ð is sometimes used in Croatian instead of Đ |
-| Þ þ | Icelandic | |
-| Ħ ħ | Maltese | |
+| Ð ð, Þ þ | Icelandic, Faroese | separate letters; Ð is sometimes written in Croatian instead of Đ |
 | Ĳ ĳ | Dutch | digraph |
-| Ŀ ŀ | Catalan | |
-| Ŋ ŋ, Ŧ ŧ | Sámi languages | |
-| Ǆ ǅ ǆ, Ǉ ǈ ǉ, Ǌ ǋ ǌ | Croatian, Serbian (Latin) | dž, lj, nj digraphs as single characters, rare in normal text |
-| Ǽ ǽ, Ǿ ǿ | Danish, Norwegian (historic) | |
+| Ŋ ŋ | Sámi languages | separate letter |
+| Ǉ ǈ ǉ, Ǌ ǋ ǌ, Ǳ ǲ ǳ | Croatian, Serbian (Latin) | lj, nj, dz digraphs as single characters |
 | ẞ | German | capital ß |
 
 ## Comparison with ClipDiac

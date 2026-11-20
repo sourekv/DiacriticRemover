@@ -78,6 +78,27 @@ static void BuildStripTable() {
     g_stripTable[0x0141] = L'L'; g_stripTable[0x0142] = L'l';  // Ł ł
     g_stripTable[0x00D8] = L'O'; g_stripTable[0x00F8] = L'o';  // Ø ø
     g_stripTable[0x0131] = L'i';                                // ı
+    g_stripTable[0x0126] = L'H'; g_stripTable[0x0127] = L'h';  // Ħ ħ
+    g_stripTable[0x013F] = L'L'; g_stripTable[0x0140] = L'l';  // Ŀ ŀ
+    g_stripTable[0x0166] = L'T'; g_stripTable[0x0167] = L't';  // Ŧ ŧ
+    g_stripTable[0x01FE] = L'O'; g_stripTable[0x01FF] = L'o';  // Ǿ ǿ
+}
+
+// Letters with diacritics that become two letters (ligatures with a mark
+// and the dž digraph). Plain ligatures and other letters stay, except the
+// long-standing ß, Æ, Œ.
+static const wchar_t* ExpandLetter(wchar_t c) {
+    switch (c) {
+    case 0x00DF: return L"ss";  // ß
+    case 0x00C6: case 0x01E2: case 0x01FC: return L"AE";  // Æ Ǣ Ǽ
+    case 0x00E6: case 0x01E3: case 0x01FD: return L"ae";  // æ ǣ ǽ
+    case 0x0152: return L"OE";  // Œ
+    case 0x0153: return L"oe";  // œ
+    case 0x01C4: return L"DZ";  // Ǆ (DŽ)
+    case 0x01C5: return L"Dz";  // ǅ (Dž)
+    case 0x01C6: return L"dz";  // ǆ (dž)
+    }
+    return nullptr;
 }
 
 static std::wstring StripAccents(const std::wstring& s) {
@@ -86,12 +107,8 @@ static std::wstring StripAccents(const std::wstring& s) {
     r.reserve(s.size());
     for (wchar_t c : s) {
         if (c >= 0x0300 && c <= 0x036F) continue;  // stray combining mark
-        if (c == 0x00DF) { r += L"ss"; continue; }  // ß
-        if (c == 0x00C6) { r += L"AE"; continue; }  // Æ
-        if (c == 0x00E6) { r += L"ae"; continue; }  // æ
-        if (c == 0x0152) { r += L"OE"; continue; }  // Œ
-        if (c == 0x0153) { r += L"oe"; continue; }  // œ
-        r += (c < 0x2000) ? g_stripTable[c] : c;
+        if (const wchar_t* e = ExpandLetter(c)) { r += e; continue; }
+        r +=(c < 0x2000) ? g_stripTable[c] : c;
     }
     return r;
 }
