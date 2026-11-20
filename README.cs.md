@@ -1,4 +1,4 @@
-# TcAccents – diakritika v názvech souborů pro Total Commander
+# Diacritics – diakritika v názvech souborů pro Total Commander
 
 Česky | [English](README.en.md) | [Shrnutí](README.md)
 
@@ -15,18 +15,18 @@ a změnu můžete vrátit.
 
 ## 1. Instalace
 
-1. V Total Commanderu najeďte na soubor `TcAccents.zip` a stiskněte Enter.
+1. V Total Commanderu najeďte na soubor `wdx_diacritics.zip` a stiskněte Enter.
 2. Total Commander pozná, že archiv obsahuje plugin, a zeptá se
    „Do you want to install it?“. Odpovězte **Yes**.
-3. Potvrďte navrženou složku, obvykle `…\plugins\wdx\TcAccents`.
+3. Potvrďte navrženou složku, obvykle `…\plugins\wdx\Diacritics`.
 4. Pokud je Total Commander v `C:\Program Files`, vyžaduje zápis práva
    správce. Objeví se hláška „Access denied“. Zvolte **As Administrator**
    a potvrďte dotaz Windows.
 
-**Slovník je součástí pluginu.** Soubor `TcAccents.dic` je v instalačním
+**Slovník je součástí pluginu.** Soubor `diacritics.dic` je v instalačním
 archivu a při instalaci se zkopíruje do složky pluginu vedle
-`TcAccents.wdx` a `TcAccents.wdx64`. Nic dalšího se nestahuje. Plugin hledá
-slovník i vlastní slovník `TcAccents.user.txt` vždy ve své složce.
+`diacritics.wdx` a `diacritics.wdx64`. Nic dalšího se nestahuje. Plugin hledá
+slovník i vlastní slovník `diacritics.user.txt` vždy ve své složce.
 
 **Aktualizace na novou verzi:** stejný postup. Na dotaz, zda přepsat
 existující plugin, odpovězte **Yes**. Pokud přepsání selže, protože je
@@ -34,7 +34,7 @@ plugin načtený, zavřete Total Commander a soubory z archivu nakopírujte do
 složky pluginu ručně (jako správce).
 
 **Kontrola:** stiskněte Ctrl+M, klikněte na tlačítko **Plugin** (`[=?]`).
-V levém seznamu musí být `tcaccents` a vpravo jeho pole:
+V levém seznamu musí být `diacritics` a vpravo jeho pole:
 
 | Pole | Co vrací |
 |---|---|
@@ -47,13 +47,13 @@ V levém seznamu musí být `tcaccents` a vpravo jeho pole:
 **Hláška „Error loading plugin file! The plugin probably needs some DLLs
 missing on your system.“** Plugin žádné další knihovny nepotřebuje
 (závisí jen na systémových `KERNEL32.dll` a `USER32.dll`). Nejčastější
-příčinou je, že soubory pluginu (`TcAccents.wdx`, `TcAccents.wdx64`)
+příčinou je, že soubory pluginu (`diacritics.wdx`, `diacritics.wdx64`)
 blokují **zásady skupiny** nastavené správcem počítače (AppLocker, zásady
 omezení softwaru SRP), typicky na firemních počítačích, které povolují
-jen schválené programy a knihovny. Slovník `TcAccents.dic` je jen datový
+jen schválené programy a knihovny. Slovník `diacritics.dic` je jen datový
 soubor a zásady se ho netýkají.
 
-Ověření: spusťte `diagnose.cmd` (z archivu `TcAccents-diag.zip` nebo ze
+Ověření: spusťte `diagnose.cmd` (z archivu `diacritics-diag.zip` nebo ze
 složky `tools`). Používá jen příkazy Windows a zkusí plugin načíst.
 Hlášení „Tento program je blokován zásadami skupiny“ (anglicky „This
 program is blocked by group policy“) potvrzuje blokaci zásadami.
@@ -74,10 +74,10 @@ pojmenované nastavení.
 2. Do pole **Rename mask: file name** (Maska pro jméno) napište:
 
    ```
-   [=tcaccents.Nazev bez diakritiky]
+   [=diacritics.Nazev bez diakritiky]
    ```
 
-   Nebo pole smažte a vložte ho tlačítkem **Plugin** > `tcaccents` >
+   Nebo pole smažte a vložte ho tlačítkem **Plugin** > `diacritics` >
    *Nazev bez diakritiky* > OK.
 3. V poli **Extension** (přípona) nechte `[E]`.
 4. Ve sloupci **New name** zkontrolujte náhled, např. `Časné Ráno.flac`
@@ -88,7 +88,7 @@ pojmenované nastavení.
 7. Opakujte body 2 až 6 s maskou
 
    ```
-   [=tcaccents.Nazev s diakritikou]
+   [=diacritics.Nazev s diakritikou]
    ```
 
    a názvem `S diakritikou`.
@@ -101,10 +101,10 @@ ručně, zavřete nejdřív Total Commander (při ukončení by soubor přepsal)
 a do sekce `[rename]` přidejte:
 
 ```ini
-Bez diakritiky_name=[=tcaccents.Nazev bez diakritiky]
+Bez diakritiky_name=[=diacritics.Nazev bez diakritiky]
 Bez diakritiky_ext=[E]
 Bez diakritiky_params=0|1|1|1
-S diakritikou_name=[=tcaccents.Nazev s diakritikou]
+S diakritikou_name=[=diacritics.Nazev s diakritikou]
 S diakritikou_ext=[E]
 S diakritikou_params=0|1|1|1
 ```
@@ -122,8 +122,8 @@ mezery podtržítkem.
 
 ## 4. Na co si dát pozor
 
-- **Název pluginu pište malými písmeny:** `[=tcaccents.…]`. Se zápisem
-  `[=TcAccents.…]` ukazuje náhled u všech souborů `<Error>`.
+- **Název pluginu pište malými písmeny:** `[=diacritics.…]`. Se zápisem
+  `[=Diacritics.…]` ukazuje náhled u všech souborů `<Error>`.
 - **Pole „Cely nazev …“ už obsahují příponu.** Pokud je použijete
   v masce jména, nechte masku přípony prázdnou, jinak vznikne
   `nazev.flac.flac`. Pro přejmenování proto používejte pole „Nazev …“
@@ -136,7 +136,7 @@ mezery podtržítkem.
 
 ## 5. Vlastní slovník
 
-Ve složce pluginu je soubor `TcAccents.user.txt` (UTF-8). Jeho položky mají
+Ve složce pluginu je soubor `diacritics.user.txt` (UTF-8). Jeho položky mají
 přednost před hlavním slovníkem. Formáty řádků:
 
 ```
@@ -173,10 +173,10 @@ build.cmd
 
 Skript stáhne seznam slov `data\src\cs_full.txt` (21 MB, není v gitu),
 pokud ještě chybí, sestaví z něj slovník (slova s aspoň 3 výskyty),
-32bitový `TcAccents.wdx`, 64bitový `TcAccents.wdx64`, testovací programy,
-instalační archiv `out\TcAccents.zip` a diagnostický archiv
-`out\TcAccents-diag.zip` (`diagnose.cmd` a testovací programy pro hledání
-chyb při načítání pluginu na jiném počítači).
+32bitový `diacritics.wdx`, 64bitový `diacritics.wdx64`, testovací programy,
+instalační archiv `out\wdx_diacritics.zip` a diagnostický archiv
+`out\diacritics-diag.zip` (`diagnose.cmd` pro hledání chyb při načítání
+pluginu na jiném počítači).
 
 Slovník obsahuje jen tvary s diakritikou. Tvar bez diakritiky si plugin
 odvodí sám. Slova jsou seřazená a předponově kódovaná: každý řádek začíná
@@ -188,7 +188,7 @@ se vynechávají. Popis formátu je v `tools/build_dict.py`.
 Test:
 
 ```bash
-out\test64.exe out\TcAccents.wdx64
+out\test64.exe out\diacritics.wdx64
 ```
 
 ## 7. Poděkování
@@ -206,6 +206,6 @@ Doplňování diakritiky by nebylo možné bez práce těchto autorů:
 
 Děkujeme.
 
-Slovník `TcAccents.dic` je z tohoto seznamu odvozený (slova s aspoň
+Slovník `diacritics.dic` je z tohoto seznamu odvozený (slova s aspoň
 3 výskyty, u každého jen nejčastější tvar s diakritikou), a proto je stejně
 jako zdroj šířen pod licencí CC BY-SA 4.0.

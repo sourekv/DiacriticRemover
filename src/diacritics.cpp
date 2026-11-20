@@ -1,6 +1,6 @@
-// TcAccents - Total Commander content plugin (WDX)
+// Diacritics - Total Commander content plugin (WDX)
 // Provides file name fields without diacritics / with diacritics restored
-// from a dictionary, for use in Multi-Rename Tool (Ctrl+M): [=TcAccents.<field>]
+// from a dictionary, for use in Multi-Rename Tool (Ctrl+M): [=diacritics.<field>]
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -224,8 +224,8 @@ static void LoadDictFile(const std::wstring& path, size_t expected) {
 
 static void LoadDictionaries() {
     std::wstring dir = ModuleDir();
-    LoadDictFile(dir + L"TcAccents.dic", 300000);
-    LoadDictFile(dir + L"TcAccents.user.txt", 0);  // user entries win
+    LoadDictFile(dir + L"diacritics.dic", 300000);
+    LoadDictFile(dir + L"diacritics.user.txt", 0);  // user entries win
 }
 
 // ---- Adding diacritics -----------------------------------------------------

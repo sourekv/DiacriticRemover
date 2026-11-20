@@ -1,5 +1,5 @@
 @echo off
-rem Builds TcAccents.wdx (32-bit), TcAccents.wdx64 (64-bit), the dictionary,
+rem Builds diacritics.wdx (32-bit), diacritics.wdx64 (64-bit), the dictionary,
 rem the test programs and the install zip into out\.
 rem Prerequisites: see README.en.md, section "Building from source".
 setlocal
@@ -29,18 +29,18 @@ rem The word list is not in git; download it when missing.
 if not exist data\src mkdir data\src
 if not exist data\src\cs_full.txt curl -sSL -f -o data\src\cs_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/cs/cs_full.txt || exit /b 1
 rem Words seen fewer than 3 times in the subtitles are mostly typos.
-python tools\build_dict.py data\src\cs_full.txt out\TcAccents.dic 3 || exit /b 1
+python tools\build_dict.py data\src\cs_full.txt out\diacritics.dic 3 || exit /b 1
 
 rem ---- Plugin, 64-bit and 32-bit (each in its own environment) ------------
 setlocal
 call "%VCVARS%" x64 >nul || exit /b 1
-cl %CFLAGS% /LD /Foout\obj64\ src\TcAccents.cpp /link /DEF:src\TcAccents.def /OUT:out\TcAccents.wdx64 /IMPLIB:out\obj64\TcAccents.lib user32.lib || exit /b 1
+cl %CFLAGS% /LD /Foout\obj64\ src\diacritics.cpp /link /DEF:src\diacritics.def /OUT:out\diacritics.wdx64 /IMPLIB:out\obj64\diacritics.lib user32.lib || exit /b 1
 cl %CFLAGS% /Foout\obj64\ test\test.cpp /link /OUT:out\test64.exe || exit /b 1
 endlocal
 
 setlocal
 call "%VCVARS%" x86 >nul || exit /b 1
-cl %CFLAGS% /LD /Foout\obj32\ src\TcAccents.cpp /link /DEF:src\TcAccents.def /OUT:out\TcAccents.wdx /IMPLIB:out\obj32\TcAccents.lib user32.lib || exit /b 1
+cl %CFLAGS% /LD /Foout\obj32\ src\diacritics.cpp /link /DEF:src\diacritics.def /OUT:out\diacritics.wdx /IMPLIB:out\obj32\diacritics.lib user32.lib || exit /b 1
 cl %CFLAGS% /Foout\obj32\ test\test.cpp /link /OUT:out\test32.exe || exit /b 1
 endlocal
 
@@ -48,13 +48,13 @@ rem ---- Install zip -------------------------------------------------------
 copy /y dist\pluginst.inf out\ >nul
 copy /y README.cs.md out\readme_cs.txt >nul
 copy /y README.en.md out\readme_en.txt >nul
-if exist out\TcAccents.zip del out\TcAccents.zip
-powershell -NoProfile -Command "Compress-Archive -Path out\TcAccents.wdx,out\TcAccents.wdx64,out\TcAccents.dic,dist\TcAccents.user.txt,out\pluginst.inf,out\readme_cs.txt,out\readme_en.txt -DestinationPath out\TcAccents.zip" || exit /b 1
+if exist out\wdx_diacritics.zip del out\wdx_diacritics.zip
+powershell -NoProfile -Command "Compress-Archive -Path out\diacritics.wdx,out\diacritics.wdx64,out\diacritics.dic,dist\diacritics.user.txt,out\pluginst.inf,out\readme_cs.txt,out\readme_en.txt -DestinationPath out\wdx_diacritics.zip" || exit /b 1
 
 rem ---- Diagnostic zip (issue #1): batch + test programs, no PowerShell needed
-if exist out\TcAccents-diag.zip del out\TcAccents-diag.zip
-powershell -NoProfile -Command "Compress-Archive -Path tools\diagnose.cmd -DestinationPath out\TcAccents-diag.zip" || exit /b 1
-echo Build OK: out\TcAccents.zip, out\TcAccents-diag.zip
+if exist out\diacritics-diag.zip del out\diacritics-diag.zip
+powershell -NoProfile -Command "Compress-Archive -Path tools\diagnose.cmd -DestinationPath out\diacritics-diag.zip" || exit /b 1
+echo Build OK: out\wdx_diacritics.zip, out\diacritics-diag.zip
 exit /b 0
 
 :no_vs

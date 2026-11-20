@@ -1,4 +1,4 @@
-# TcAccents
+# Diacritics
 
 A Total Commander content plugin (WDX) that removes diacritics from file and
 folder names, or adds Czech diacritics back using a dictionary of about
@@ -8,11 +8,11 @@ before renaming and Undo afterwards.
 - `Žlutý kůň.jpg` becomes `Zluty kun.jpg`
 - `Cesky Krumlov - zluty kun.jpg` becomes `Český Krumlov - žlutý kůň.jpg`
 
-Install: download `TcAccents.zip` from
-[Releases](https://github.com/sourekv/TcAccents/releases), press Enter on it
-in Total Commander and confirm. The dictionary (`TcAccents.dic`) is part of the plugin, nothing
+Install: download `wdx_diacritics.zip` from
+[Releases](https://github.com/sourekv/DiacriticRemover/releases), press Enter on it
+in Total Commander and confirm. The dictionary (`diacritics.dic`) is part of the plugin, nothing
 else is downloaded. Then use the mask
-`[=tcaccents.Nazev bez diakritiky]` or `[=tcaccents.Nazev s diakritikou]`
+`[=diacritics.Nazev bez diakritiky]` or `[=diacritics.Nazev s diakritikou]`
 in Ctrl+M.
 
 The dictionary is derived from the Czech word list of
@@ -32,11 +32,11 @@ před přejmenováním a možností vrátit změnu tlačítkem Undo.
 - `Žlutý kůň.jpg` se změní na `Zluty kun.jpg`
 - `Cesky Krumlov - zluty kun.jpg` se změní na `Český Krumlov - žlutý kůň.jpg`
 
-Instalace: stáhněte `TcAccents.zip` z
-[Releases](https://github.com/sourekv/TcAccents/releases), v Total Commanderu
-na něm stiskněte Enter a potvrďte. Slovník (`TcAccents.dic`) je součástí pluginu, nic dalšího
+Instalace: stáhněte `wdx_diacritics.zip` z
+[Releases](https://github.com/sourekv/DiacriticRemover/releases), v Total Commanderu
+na něm stiskněte Enter a potvrďte. Slovník (`diacritics.dic`) je součástí pluginu, nic dalšího
 se nestahuje. Pak v Ctrl+M použijte masku
-`[=tcaccents.Nazev bez diakritiky]` nebo `[=tcaccents.Nazev s diakritikou]`.
+`[=diacritics.Nazev bez diakritiky]` nebo `[=diacritics.Nazev s diakritikou]`.
 
 Slovník je odvozený z českého seznamu slov projektu
 [FrequencyWords](https://github.com/hermitdave/FrequencyWords) (Hermit Dave),

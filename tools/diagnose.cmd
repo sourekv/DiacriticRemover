@@ -1,11 +1,11 @@
 @echo off
-rem TcAccents - diagnostika nacitani pluginu (issue #1). Nic nemeni.
+rem Diacritics - diagnostika nacitani pluginu (issue #1). Nic nemeni.
 rem Pouziva jen prikazy Windows, zadne dalsi programy.
 rem Pouziti:  diagnose.cmd ["slozka s pluginem"]
 rem Bez parametru vezme slozku z wincmd.ini. Vysledek ulozi do
-rem tcaccents-diag.txt vedle tohoto souboru a zobrazi ho.
+rem diacritics-diag.txt vedle tohoto souboru a zobrazi ho.
 setlocal
-set "OUT=%~dp0tcaccents-diag.txt"
+set "OUT=%~dp0diacritics-diag.txt"
 set "INI=%APPDATA%\GHISLER\wincmd.ini"
 set "DIR=%~1"
 call :find_dir
@@ -21,7 +21,7 @@ rem ---------------------------------------------------------------------------
 :find_dir
 if defined DIR goto dir_trim
 if not exist "%INI%" exit /b
-for /f "tokens=1,* delims==" %%a in ('findstr /i /r "tcaccents\.wdx" "%INI%"') do set "PLUGIN=%%b"
+for /f "tokens=1,* delims==" %%a in ('findstr /i /r "diacritics\.wdx" "%INI%"') do set "PLUGIN=%%b"
 if defined PLUGIN for %%x in ("%PLUGIN%") do set "DIR=%%~dpx"
 :dir_trim
 if defined DIR if "%DIR:~-1%"=="\" set "DIR=%DIR:~0,-1%"
@@ -53,14 +53,14 @@ echo === Total Commander ===
 tasklist /fi "imagename eq TOTALCMD*"
 echo wincmd.ini: %INI%
 if not exist "%INI%" echo wincmd.ini neexistuje
-if exist "%INI%" findstr /n /i /c:"tcaccents.wdx" /c:"[=tcaccents." "%INI%"
+if exist "%INI%" findstr /n /i /c:"diacritics.wdx" /c:"[=diacritics." "%INI%"
 echo.
 if not defined DIR goto no_dir
 echo === Slozka pluginu: %DIR% ===
 rem dir /r ukaze i skryte proudy; :Zone.Identifier znamena soubor stazeny z internetu
 dir /r "%DIR%"
-call :file TcAccents.wdx
-call :file TcAccents.wdx64
+call :file diacritics.wdx
+call :file diacritics.wdx64
 goto events
 :no_dir
 echo Slozka pluginu neni zadana ani ve wincmd.ini.
@@ -68,13 +68,13 @@ echo Spustte: diagnose.cmd "C:\cesta\ke\slozce\pluginu"
 :events
 echo.
 echo === Protokol AppLocker (EXE a DLL) ===
-wevtutil qe "Microsoft-Windows-AppLocker/EXE and DLL" /c:500 /rd:true /f:text | findstr /i "tcaccents test32 test64"
+wevtutil qe "Microsoft-Windows-AppLocker/EXE and DLL" /c:500 /rd:true /f:text | findstr /i "diacritics test32 test64"
 echo.
 echo === Protokol Code Integrity / Smart App Control ===
-wevtutil qe "Microsoft-Windows-CodeIntegrity/Operational" /c:500 /rd:true /f:text | findstr /i "tcaccents test32 test64"
+wevtutil qe "Microsoft-Windows-CodeIntegrity/Operational" /c:500 /rd:true /f:text | findstr /i "diacritics test32 test64"
 echo.
 echo === Protokol Windows Defender ===
-wevtutil qe "Microsoft-Windows-Windows Defender/Operational" /c:500 /rd:true /f:text | findstr /i "tcaccents test32 test64"
+wevtutil qe "Microsoft-Windows-Windows Defender/Operational" /c:500 /rd:true /f:text | findstr /i "diacritics test32 test64"
 echo.
 echo === Konec automaticke casti ===
 exit /b
@@ -98,20 +98,20 @@ set "RUN32=%SystemRoot%\SysWOW64\rundll32.exe"
 echo.
 echo === Test nacteni pluginu ===
 echo Ted se dvakrat objevi okno rundll32. Precte si jeho text a zavrete ho.
-echo   "Chybejici polozka: TcAccentsLoadTest" (anglicky "Missing entry")
+echo   "Chybejici polozka: DiacriticsLoadTest" (anglicky "Missing entry")
 echo       = plugin se nacetl v poradku.
 echo   "Pri spousteni souboru ... doslo k problemu" a dalsi text
 echo       = plugin se nenacetl, opiste prosim ten dalsi text.
 echo.
 >> "%OUT%" echo.
 >> "%OUT%" echo === Test nacteni pluginu (rundll32) ===
-if exist "%RUN64%" call :load_one "%RUN64%" "%DIR%\TcAccents.wdx64" 64
-if exist "%RUN32%" call :load_one "%RUN32%" "%DIR%\TcAccents.wdx" 32
+if exist "%RUN64%" call :load_one "%RUN64%" "%DIR%\diacritics.wdx64" 64
+if exist "%RUN32%" call :load_one "%RUN32%" "%DIR%\diacritics.wdx" 32
 exit /b
 
 :load_one
 echo Test %3 bit: %~2
-"%~1" "%~2",TcAccentsLoadTest
+"%~1" "%~2",DiacriticsLoadTest
 choice /c 12 /n /m "Co okno ukazalo? 1 = Chybejici polozka (nacteno), 2 = jiny text: "
 if errorlevel 2 goto load_fail
 >> "%OUT%" echo %3 bit: nacteno v poradku (Chybejici polozka)

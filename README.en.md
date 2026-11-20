@@ -1,4 +1,4 @@
-# TcAccents – diacritics in file names for Total Commander
+# Diacritics – diacritics in file names for Total Commander
 
 [Česky](README.cs.md) | English | [Summary](README.md)
 
@@ -18,19 +18,19 @@ Adding them uses a Czech dictionary, so it only makes sense for Czech names.
 
 ## 1. Installation
 
-1. In Total Commander, move the cursor to `TcAccents.zip` and press Enter.
+1. In Total Commander, move the cursor to `wdx_diacritics.zip` and press Enter.
 2. Total Commander detects that the archive contains a plugin and asks
    "Do you want to install it?". Answer **Yes**.
-3. Confirm the suggested folder, usually `…\plugins\wdx\TcAccents`.
+3. Confirm the suggested folder, usually `…\plugins\wdx\Diacritics`.
 4. If Total Commander is installed in `C:\Program Files`, writing there needs
    administrator rights. An "Access denied" message appears. Choose
    **As Administrator** and confirm the Windows prompt.
 
-**The dictionary is part of the plugin.** The file `TcAccents.dic` is in
+**The dictionary is part of the plugin.** The file `diacritics.dic` is in
 the install archive and is copied into the plugin folder next to
-`TcAccents.wdx` and `TcAccents.wdx64`. Nothing else is downloaded. The
+`diacritics.wdx` and `diacritics.wdx64`. Nothing else is downloaded. The
 plugin always looks for the dictionary and the user dictionary
-`TcAccents.user.txt` in its own folder.
+`diacritics.user.txt` in its own folder.
 
 **Updating to a new version:** same steps. When asked whether to overwrite
 the existing plugin, answer **Yes**. If overwriting fails because the plugin
@@ -38,7 +38,7 @@ is loaded, close Total Commander and copy the files from the archive into
 the plugin folder by hand (as administrator).
 
 **Check:** press Ctrl+M and click the **Plugin** button (`[=?]`).
-The left list must contain `tcaccents`, and the right list its fields.
+The left list must contain `diacritics`, and the right list its fields.
 The field names are Czech:
 
 | Field | Meaning | Returns |
@@ -52,13 +52,13 @@ The field names are Czech:
 **"Error loading plugin file! The plugin probably needs some DLLs missing
 on your system."** The plugin needs no extra libraries (it depends only on
 the system `KERNEL32.dll` and `USER32.dll`). The most common cause is that
-the plugin files (`TcAccents.wdx`, `TcAccents.wdx64`) are blocked by
+the plugin files (`diacritics.wdx`, `diacritics.wdx64`) are blocked by
 **group policy** set by the computer's administrator (AppLocker, Software
 Restriction Policies), typically on company computers that allow only
-approved programs and libraries. The dictionary `TcAccents.dic` is a plain
+approved programs and libraries. The dictionary `diacritics.dic` is a plain
 data file and is not affected by these policies.
 
-To check: run `diagnose.cmd` (from `TcAccents-diag.zip` or the `tools`
+To check: run `diagnose.cmd` (from `diacritics-diag.zip` or the `tools`
 folder). It uses only Windows commands and tries to load the plugin. The
 message "This program is blocked by group policy" (Czech: "Tento program
 je blokován zásadami skupiny") confirms a policy block.
@@ -78,10 +78,10 @@ To avoid typing the mask every time, save it once as a named setting.
 2. In the **Rename mask: file name** field, type:
 
    ```
-   [=tcaccents.Nazev bez diakritiky]
+   [=diacritics.Nazev bez diakritiky]
    ```
 
-   Or clear the field and insert it with **Plugin** > `tcaccents` >
+   Or clear the field and insert it with **Plugin** > `diacritics` >
    *Nazev bez diakritiky* > OK.
 3. Leave `[E]` in the **Extension** field.
 4. Check the preview in the **New name** column, e.g. `Časné Ráno.flac`
@@ -92,7 +92,7 @@ To avoid typing the mask every time, save it once as a named setting.
 7. Repeat steps 2 to 6 with the mask
 
    ```
-   [=tcaccents.Nazev s diakritikou]
+   [=diacritics.Nazev s diakritikou]
    ```
 
    and the name `Add diacritics`.
@@ -105,10 +105,10 @@ hand, first close Total Commander (it rewrites the file on exit), then add
 to the `[rename]` section:
 
 ```ini
-Remove diacritics_name=[=tcaccents.Nazev bez diakritiky]
+Remove diacritics_name=[=diacritics.Nazev bez diakritiky]
 Remove diacritics_ext=[E]
 Remove diacritics_params=0|1|1|1
-Add diacritics_name=[=tcaccents.Nazev s diakritikou]
+Add diacritics_name=[=diacritics.Nazev s diakritikou]
 Add diacritics_ext=[E]
 Add diacritics_params=0|1|1|1
 ```
@@ -126,8 +126,8 @@ underscores in the **Search for** field.
 
 ## 4. Things to watch out for
 
-- **Write the plugin name in lowercase:** `[=tcaccents.…]`. With
-  `[=TcAccents.…]` the preview shows `<Error>` for every file.
+- **Write the plugin name in lowercase:** `[=diacritics.…]`. With
+  `[=Diacritics.…]` the preview shows `<Error>` for every file.
 - **The "Cely nazev …" fields already include the extension.** If you use
   them in the name mask, leave the extension mask empty, or you get
   `name.flac.flac`. For renaming, use the "Nazev …" fields with `[E]` as
@@ -140,7 +140,7 @@ underscores in the **Search for** field.
 
 ## 5. Your own dictionary
 
-The plugin folder contains `TcAccents.user.txt` (UTF-8). Its entries take
+The plugin folder contains `diacritics.user.txt` (UTF-8). Its entries take
 precedence over the main dictionary. Line formats:
 
 ```
@@ -177,10 +177,10 @@ build.cmd
 
 The script downloads the word list `data\src\cs_full.txt` (21 MB, not in
 git) if it is missing, builds the dictionary from it (words seen at least
-3 times), the 32-bit `TcAccents.wdx`, the 64-bit `TcAccents.wdx64`, test
-programs, the install archive `out\TcAccents.zip` and the diagnostic archive
-`out\TcAccents-diag.zip` (`diagnose.cmd` and the test programs, for tracking
-down plugin load errors on another computer).
+3 times), the 32-bit `diacritics.wdx`, the 64-bit `diacritics.wdx64`, test
+programs, the install archive `out\wdx_diacritics.zip` and the diagnostic archive
+`out\diacritics-diag.zip` (`diagnose.cmd`, for tracking down plugin load
+errors on another computer).
 
 The dictionary holds only the forms with diacritics; the plugin derives the
 form without diacritics itself. Words are sorted and prefix-coded: each line
@@ -193,7 +193,7 @@ described in `tools/build_dict.py`.
 Test:
 
 ```bash
-out\test64.exe out\TcAccents.wdx64
+out\test64.exe out\diacritics.wdx64
 ```
 
 ## 7. Credits
@@ -213,6 +213,6 @@ Adding diacritics would not be possible without the work of:
 
 Thank you.
 
-The dictionary `TcAccents.dic` is derived from this list (words seen at
+The dictionary `diacritics.dic` is derived from this list (words seen at
 least 3 times, keeping only the most frequent form with diacritics for each
 word), so like its source it is distributed under CC BY-SA 4.0.

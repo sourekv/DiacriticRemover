@@ -1,4 +1,4 @@
-"""Build TcAccents.dic from a frequency word list.
+"""Build diacritics.dic from a frequency word list.
 
 Input:  lines "word count" (UTF-8), e.g. FrequencyWords cs_full.txt
 Output: UTF-8, readable "#" header (source, credits, license), then the
@@ -66,7 +66,7 @@ def main(src: str, dst: str, min_count: int = 1) -> None:
         if k != w and len(k) == len(w) and not REPEATED.search(k)
     )
     with open(dst, "w", encoding="utf-8", newline="\n") as f:
-        f.write("# TcAccents dictionary, generated from %s\n" % src.replace("\\", "/").split("/")[-1])
+        f.write("# Diacritics dictionary, generated from %s\n" % src.replace("\\", "/").split("/")[-1])
         f.write("# Source: FrequencyWords by Hermit Dave (https://github.com/hermitdave/FrequencyWords),\n")
         f.write("# computed from the OpenSubtitles2018 corpus (OPUS, https://opus.nlpl.eu/).\n")
         f.write("# Thanks to the authors. License: CC BY-SA 4.0,\n")

@@ -1,5 +1,5 @@
 [plugininstall]
-description=TcAccents - odstraneni a doplneni diakritiky v nazvech souboru (Multi-Rename)
+description=Diacritics - odstraneni a doplneni diakritiky v nazvech souboru (Multi-Rename)
 type=wdx
-file=TcAccents.wdx
-defaultdir=TcAccents
+file=diacritics.wdx
+defaultdir=Diacritics

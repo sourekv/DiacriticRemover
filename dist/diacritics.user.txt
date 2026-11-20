@@ -1,4 +1,4 @@
-# Vlastni slovnik pluginu TcAccents (UTF-8). Ma prednost pred TcAccents.dic.
+# Vlastni slovnik pluginu Diacritics (UTF-8). Ma prednost pred diacritics.dic.
 # Formaty radku:
 #   kůň          slovo s diakritikou, klic se odvodi sam (kun)
 #   ze=ze        pevny preklad: "ze" nechat bez diakritiky
