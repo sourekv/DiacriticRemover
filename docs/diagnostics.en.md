@@ -19,7 +19,7 @@ for company computers that allow only approved programs and libraries.
 Run `diagnose.cmd`. It is attached to every release as
 `diacritics-diag.zip` and is in the `tools` folder of the sources. It uses
 only Windows commands, needs neither PowerShell nor any other program, and
-changes nothing.
+changes nothing. Its messages are in English.
 
 1. Extract `diagnose.cmd` to any folder and run it. Without a parameter it
    finds the plugin folder in `wincmd.ini`; otherwise pass it:

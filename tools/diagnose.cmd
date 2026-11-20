@@ -4,7 +4,6 @@ rem Uses only Windows commands, no other programs.
 rem Usage:  diagnose.cmd ["plugin folder"]
 rem Without a parameter it takes the folder from wincmd.ini. The result is
 rem saved to diacritics-diag.txt next to this file and shown.
-rem Messages for the user are in Czech.
 setlocal
 set "OUT=%~dp0diacritics-diag.txt"
 set "INI=%APPDATA%\GHISLER\wincmd.ini"
@@ -14,7 +13,7 @@ call :main > "%OUT%" 2>&1
 type "%OUT%"
 if defined DIR call :load_tests
 echo.
-echo Vysledek je ulozen v: %OUT%
+echo The result is saved in: %OUT%
 pause
 exit /b
 
@@ -32,60 +31,60 @@ rem ---------------------------------------------------------------------------
 :main
 echo === System ===
 ver
-echo Architektura: %PROCESSOR_ARCHITECTURE% %PROCESSOR_ARCHITEW6432%
+echo Architecture: %PROCESSOR_ARCHITECTURE% %PROCESSOR_ARCHITEW6432%
 echo.
-echo === Smart App Control (0 vypnuto, 1 zapnuto, 2 zkusebni) ===
+echo === Smart App Control (0 off, 1 on, 2 evaluation) ===
 reg query "HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy" /v VerifiedAndReputablePolicyState
 echo.
-echo === AppLocker (EnforcementMode 1 = vynucovano, 0 = jen audit) ===
+echo === AppLocker (EnforcementMode 1 = enforced, 0 = audit only) ===
 reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\SrpV2" /s | findstr /i "HKEY EnforcementMode"
 sc query AppIDSvc | findstr /i "STATE"
 echo.
-echo === Zasady omezeni softwaru SRP (DefaultLevel 0 = zakazano; TransparentEnabled 2 = i DLL) ===
+echo === Software Restriction Policies SRP (DefaultLevel 0 = disallowed; TransparentEnabled 2 = DLLs too) ===
 reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\Safer\CodeIdentifiers" /v DefaultLevel
 reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\Safer\CodeIdentifiers" /v TransparentEnabled
 reg query "HKCU\SOFTWARE\Policies\Microsoft\Windows\Safer\CodeIdentifiers" /v DefaultLevel
 echo.
-echo === WDAC, aktivni zasady Code Integrity (nekolik zasad ma kazdy Windows) ===
+echo === WDAC, active Code Integrity policies (every Windows has a few) ===
 dir /b "%SystemRoot%\System32\CodeIntegrity\CiPolicies\Active"
-if exist "%SystemRoot%\System32\CodeIntegrity\SIPolicy.p7b" echo SIPolicy.p7b existuje
+if exist "%SystemRoot%\System32\CodeIntegrity\SIPolicy.p7b" echo SIPolicy.p7b exists
 echo.
 echo === Total Commander ===
 tasklist /fi "imagename eq TOTALCMD*"
 echo wincmd.ini: %INI%
-if not exist "%INI%" echo wincmd.ini neexistuje
+if not exist "%INI%" echo wincmd.ini does not exist
 if exist "%INI%" findstr /n /i /c:"diacritics.wdx" /c:"[=diacritics." "%INI%"
 echo.
 if not defined DIR goto no_dir
-echo === Slozka pluginu: %DIR% ===
+echo === Plugin folder: %DIR% ===
 rem dir /r also lists alternate streams; :Zone.Identifier marks a file downloaded from the internet
 dir /r "%DIR%"
 call :file diacritics.wdx
 call :file diacritics.wdx64
 goto events
 :no_dir
-echo Slozka pluginu neni zadana ani ve wincmd.ini.
-echo Spustte: diagnose.cmd "C:\cesta\ke\slozce\pluginu"
+echo The plugin folder was not given and is not in wincmd.ini.
+echo Run: diagnose.cmd "C:\path\to\plugin\folder"
 :events
 echo.
-echo === Protokol AppLocker (EXE a DLL) ===
+echo === AppLocker log (EXE and DLL) ===
 wevtutil qe "Microsoft-Windows-AppLocker/EXE and DLL" /c:500 /rd:true /f:text | findstr /i "diacritics test32 test64"
 echo.
-echo === Protokol Code Integrity / Smart App Control ===
+echo === Code Integrity / Smart App Control log ===
 wevtutil qe "Microsoft-Windows-CodeIntegrity/Operational" /c:500 /rd:true /f:text | findstr /i "diacritics test32 test64"
 echo.
-echo === Protokol Windows Defender ===
+echo === Windows Defender log ===
 wevtutil qe "Microsoft-Windows-Windows Defender/Operational" /c:500 /rd:true /f:text | findstr /i "diacritics test32 test64"
 echo.
-echo === Konec automaticke casti ===
+echo === End of the automatic part ===
 exit /b
 
 :file
 echo --- %1
-if not exist "%DIR%\%1" echo CHYBI
+if not exist "%DIR%\%1" echo MISSING
 if not exist "%DIR%\%1" exit /b
 certutil -hashfile "%DIR%\%1" SHA256 | findstr /v /i "certutil"
-echo Zone.Identifier (hlaska "nelze nalezt soubor" = neni oznacen jako stazeny z internetu):
+echo Zone.Identifier ("cannot find the file" = not marked as downloaded from the internet):
 more < "%DIR%\%1:Zone.Identifier"
 exit /b
 
@@ -98,15 +97,15 @@ set "RUN64=%SystemRoot%\System32\rundll32.exe"
 if defined PROCESSOR_ARCHITEW6432 set "RUN64=%SystemRoot%\Sysnative\rundll32.exe"
 set "RUN32=%SystemRoot%\SysWOW64\rundll32.exe"
 echo.
-echo === Test nacteni pluginu ===
-echo Ted se dvakrat objevi okno rundll32. Precte si jeho text a zavrete ho.
-echo   "Chybejici polozka: DiacriticsLoadTest" (anglicky "Missing entry")
-echo       = plugin se nacetl v poradku.
-echo   "Pri spousteni souboru ... doslo k problemu" a dalsi text
-echo       = plugin se nenacetl, opiste prosim ten dalsi text.
+echo === Plugin load test ===
+echo A rundll32 window appears twice. Read its text and close it.
+echo   "Missing entry: DiacriticsLoadTest" (Czech "Chybejici polozka")
+echo       = the plugin loaded fine.
+echo   "There was a problem starting ..." followed by more text
+echo       = the plugin did not load, please copy that text.
 echo.
 >> "%OUT%" echo.
->> "%OUT%" echo === Test nacteni pluginu (rundll32) ===
+>> "%OUT%" echo === Plugin load test (rundll32) ===
 if exist "%RUN64%" call :load_one "%RUN64%" "%DIR%\diacritics.wdx64" 64
 if exist "%RUN32%" call :load_one "%RUN32%" "%DIR%\diacritics.wdx" 32
 exit /b
@@ -114,12 +113,12 @@ exit /b
 :load_one
 echo Test %3 bit: %~2
 "%~1" "%~2",DiacriticsLoadTest
-choice /c 12 /n /m "Co okno ukazalo? 1 = Chybejici polozka (nacteno), 2 = jiny text: "
+choice /c 12 /n /m "What did the window show? 1 = Missing entry (loaded), 2 = other text: "
 if errorlevel 2 goto load_fail
->> "%OUT%" echo %3 bit: nacteno v poradku (Chybejici polozka)
+>> "%OUT%" echo %3 bit: loaded fine (Missing entry)
 exit /b
 :load_fail
 set "MSG="
-set /p "MSG=Opiste text z okna: "
->> "%OUT%" echo %3 bit: CHYBA: %MSG%
+set /p "MSG=Copy the text from the window: "
+>> "%OUT%" echo %3 bit: ERROR: %MSG%
 exit /b

@@ -18,7 +18,8 @@ o firemní počítače, které povolují jen schválené programy a knihovny.
 
 Spusťte `diagnose.cmd`. Je v příloze `diacritics-diag.zip` u každého
 releasu a ve složce `tools` ve zdrojích. Používá jen příkazy Windows,
-nepotřebuje PowerShell ani žádné další programy a nic nemění.
+nepotřebuje PowerShell ani žádné další programy a nic nemění. Hlášky
+skriptu jsou anglicky.
 
 1. Rozbalte `diagnose.cmd` do libovolné složky a spusťte ho. Bez parametru
    najde složku pluginu ve `wincmd.ini`, jinak ji zadejte:
