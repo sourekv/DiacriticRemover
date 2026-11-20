@@ -1,9 +1,10 @@
 @echo off
-rem Diacritics - diagnostika nacitani pluginu (issue #1). Nic nemeni.
-rem Pouziva jen prikazy Windows, zadne dalsi programy.
-rem Pouziti:  diagnose.cmd ["slozka s pluginem"]
-rem Bez parametru vezme slozku z wincmd.ini. Vysledek ulozi do
-rem diacritics-diag.txt vedle tohoto souboru a zobrazi ho.
+rem Diacritics - diagnostics for plugin load errors (issue #1). Changes nothing.
+rem Uses only Windows commands, no other programs.
+rem Usage:  diagnose.cmd ["plugin folder"]
+rem Without a parameter it takes the folder from wincmd.ini. The result is
+rem saved to diacritics-diag.txt next to this file and shown.
+rem Messages for the user are in Czech.
 setlocal
 set "OUT=%~dp0diacritics-diag.txt"
 set "INI=%APPDATA%\GHISLER\wincmd.ini"
@@ -57,7 +58,7 @@ if exist "%INI%" findstr /n /i /c:"diacritics.wdx" /c:"[=diacritics." "%INI%"
 echo.
 if not defined DIR goto no_dir
 echo === Slozka pluginu: %DIR% ===
-rem dir /r ukaze i skryte proudy; :Zone.Identifier znamena soubor stazeny z internetu
+rem dir /r also lists alternate streams; :Zone.Identifier marks a file downloaded from the internet
 dir /r "%DIR%"
 call :file diacritics.wdx
 call :file diacritics.wdx64
@@ -89,8 +90,9 @@ more < "%DIR%\%1:Zone.Identifier"
 exit /b
 
 rem ---------------------------------------------------------------------------
-rem Test nacteni pluginu systemovym rundll32. Vola neexistujici funkci, takze
-rem se plugin jen nacte a nic se nespusti. Vysledek ukaze rundll32 v okne.
+rem Load test with the system rundll32. It calls a function that does not exist,
+rem so the plugin is only loaded and nothing runs. rundll32 shows the result
+rem in a window.
 :load_tests
 set "RUN64=%SystemRoot%\System32\rundll32.exe"
 if defined PROCESSOR_ARCHITEW6432 set "RUN64=%SystemRoot%\Sysnative\rundll32.exe"
