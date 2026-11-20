@@ -2,9 +2,7 @@
 
 Česky | [English](stripping.en.md)
 
-Doplňkový popis k [návodu](../README.cs.md). Týká se polí „… bez diakritiky“.
-Doplňování diakritiky (pole „… s diakritikou“) funguje jen pro češtinu,
-protože používá český slovník.
+Doplňkový popis k [návodu](../README.cs.md): co přesně plugin převádí.
 
 ## Co plugin převádí
 

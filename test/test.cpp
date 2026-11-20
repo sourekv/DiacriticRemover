@@ -1,15 +1,7 @@
 // Loads the plugin like Total Commander does and prints all fields for sample names.
 // Usage: test.exe <plugin.wdx|wdx64> [name ...]
 #include <windows.h>
-#include <psapi.h>
 #include <cstdio>
-#pragma comment(lib, "psapi.lib")
-
-static double MemMB() {
-    PROCESS_MEMORY_COUNTERS pmc = {sizeof(pmc)};
-    GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
-    return pmc.PagefileUsage / 1048576.0;
-}
 
 typedef int(__stdcall* GetFieldFn)(int, char*, char*, int);
 typedef int(__stdcall* GetValueWFn)(WCHAR*, int, int, void*, int, int);
@@ -41,26 +33,13 @@ int wmain(int argc, wchar_t** argv) {
         fputs("missing exports\n", stderr); return 1;
     }
     const wchar_t* defaults[] = {
-        L"C:\\Fotky\\Cesky Krumlov - zluty kun.jpg",
+        L"C:\\Fotky\\Český Krumlov - žlutý kůň.jpg",
         L"C:\\Docs\\Příliš žluťoučký kůň úpěl ďábelské ódy.txt",
-        L"C:\\Docs\\SKOLA_dite_2024.pdf",
-        L"C:\\Docs\\CeskyKrumlovVyletUz.docx",
+        L"C:\\Docs\\ŠKOLA_dítě_2024.pdf",
+        L"C:\\Docs\\Łódź, Straße, Ærø, Đoković, Ħamrun.příloha",
         L"C:\\Docs\\Složka s diakritikou\\",
         L"C:\\Docs\\.gitignore",
-        L"C:\\Docs\\nevycerpavejte konspiracni sukovita notysek.txt",
     };
-    // First "with accents" call loads the dictionary: measure it.
-    {
-        double before = MemMB();
-        LARGE_INTEGER f, t0, t1;
-        QueryPerformanceFrequency(&f);
-        QueryPerformanceCounter(&t0);
-        WCHAR value[256];
-        getValue((WCHAR*)L"x.txt", 1, 0, value, sizeof(value), 0);
-        QueryPerformanceCounter(&t1);
-        printf("dictionary load: %.0f ms, +%.1f MB memory\n",
-               (t1.QuadPart - t0.QuadPart) * 1000.0 / f.QuadPart, MemMB() - before);
-    }
     int n = argc > 2 ? argc - 2 : (int)(sizeof(defaults) / sizeof(*defaults));
     for (int i = 0; i < n; ++i) {
         const wchar_t* name = argc > 2 ? argv[i + 2] : defaults[i];

@@ -2,10 +2,7 @@
 
 [Česky](stripping.cs.md) | English
 
-A companion to the [guide](../README.en.md). It covers the
-"… bez diakritiky" (without diacritics) fields. Adding diacritics (the
-"… s diakritikou" fields) works for Czech only, because it uses a Czech
-dictionary.
+A companion to the [guide](../README.en.md): what exactly the plugin converts.
 
 ## What the plugin converts
 

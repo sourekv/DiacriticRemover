@@ -1,21 +1,19 @@
-# Diacritics – diakritika v názvech souborů pro Total Commander
+# Diacritics – odstranění diakritiky z názvů souborů pro Total Commander
 
 Česky | [English](README.en.md) | [Shrnutí](README.md)
 
-Obsahový plugin (WDX) pro Total Commander. Odstraní nebo doplní českou
-diakritiku v názvech souborů a složek. Používá se v nástroji
-**Hromadné přejmenování** (Ctrl+M), kde před přejmenováním uvidíte náhled
-a změnu můžete vrátit.
+Obsahový plugin (WDX) pro Total Commander. Odstraní diakritiku z názvů
+souborů a složek. Používá se v nástroji **Hromadné přejmenování** (Ctrl+M),
+kde před přejmenováním uvidíte náhled a změnu můžete vrátit.
 
-| Původní název | Bez diakritiky | S diakritikou |
-|---|---|---|
-| `Žlutý kůň.jpg` | `Zluty kun.jpg` | – |
-| `Cesky Krumlov - zluty kun.jpg` | – | `Český Krumlov - žlutý kůň.jpg` |
-| `SKOLA_dite_2024.pdf` | – | `ŠKOLA_dítě_2024.pdf` |
+| Původní název | Bez diakritiky |
+|---|---|
+| `Žlutý kůň.jpg` | `Zluty kun.jpg` |
+| `ŠKOLA_dítě_2024.pdf` | `SKOLA_dite_2024.pdf` |
+| `Łódź, Straße, Đoković.txt` | `Lodz, Strasse, Dokovic.txt` |
 
-Diakritiku odstraní z latinkových písmen všech jazyků (i ł, ø, ß a další,
-podrobnosti v [docs/stripping.cs.md](docs/stripping.cs.md)). Doplňování
-funguje podle českého slovníku, takže má smysl jen pro české názvy.
+Diakritiku odstraní z latinkových písmen všech jazyků (podrobnosti
+v [docs/stripping.cs.md](docs/stripping.cs.md)).
 
 ## 1. Instalace
 
@@ -26,11 +24,6 @@ funguje podle českého slovníku, takže má smysl jen pro české názvy.
 4. Pokud je Total Commander v `C:\Program Files`, vyžaduje zápis práva
    správce. Objeví se hláška „Access denied“. Zvolte **As Administrator**
    a potvrďte dotaz Windows.
-
-**Slovník je součástí pluginu.** Soubor `diacritics.dic` je v instalačním
-archivu a při instalaci se zkopíruje do složky pluginu vedle
-`diacritics.wdx` a `diacritics.wdx64`. Nic dalšího se nestahuje. Plugin hledá
-slovník i vlastní slovník `diacritics.user.txt` vždy ve své složce.
 
 **Aktualizace na novou verzi:** stejný postup. Na dotaz, zda přepsat
 existující plugin, odpovězte **Yes**. Pokud přepsání selže, protože je
@@ -43,19 +36,16 @@ V levém seznamu musí být `diacritics` a vpravo jeho pole:
 | Pole | Co vrací |
 |---|---|
 | Nazev bez diakritiky | název bez přípony, diakritika odstraněna |
-| Nazev s diakritikou | název bez přípony, diakritika doplněna |
 | Pripona bez diakritiky | přípona, diakritika odstraněna |
 | Cely nazev bez diakritiky | název i s příponou, diakritika odstraněna |
-| Cely nazev s diakritikou | název i s příponou, diakritika doplněna |
 
 **Hláška „Error loading plugin file! The plugin probably needs some DLLs
 missing on your system.“** Plugin žádné další knihovny nepotřebuje
-(závisí jen na systémových `KERNEL32.dll` a `USER32.dll`). Nejčastější
-příčinou je, že soubory pluginu (`diacritics.wdx`, `diacritics.wdx64`)
-blokují **zásady skupiny** nastavené správcem počítače (AppLocker, zásady
-omezení softwaru SRP), typicky na firemních počítačích, které povolují
-jen schválené programy a knihovny. Slovník `diacritics.dic` je jen datový
-soubor a zásady se ho netýkají.
+(závisí jen na systémových knihovnách Windows). Nejčastější příčinou je,
+že soubory pluginu (`diacritics.wdx`, `diacritics.wdx64`) blokují **zásady
+skupiny** nastavené správcem počítače (AppLocker, zásady omezení softwaru
+SRP), typicky na firemních počítačích, které povolují jen schválené
+programy a knihovny.
 
 Ověření: spusťte `diagnose.cmd` (z archivu `diacritics-diag.zip` nebo ze
 složky `tools`). Používá jen příkazy Windows a zkusí plugin načíst.
@@ -69,7 +59,7 @@ nové verzi je potřeba pravidlo obnovit). Další možností je, aby správce
 plugin nainstaloval do složky, kterou zásady povolují, obvykle
 `C:\Program Files`.
 
-## 2. Uložená nastavení v Hromadném přejmenování
+## 2. Uložené nastavení v Hromadném přejmenování
 
 Abyste masku nemuseli pokaždé vypisovat, uložte si ji jednou jako
 pojmenované nastavení.
@@ -89,18 +79,11 @@ pojmenované nastavení.
 5. Stiskněte **F2** (nebo rozbalte seznam vpravo nahoře) a zvolte
    **Save settings**.
 6. Napište název `Bez diakritiky` a potvrďte Enterem.
-7. Opakujte body 2 až 6 s maskou
-
-   ```
-   [=diacritics.Nazev s diakritikou]
-   ```
-
-   a názvem `S diakritikou`.
-8. Okno zavřete tlačítkem **Close**. Tlačítko **Start!** nemačkejte, jinak
+7. Okno zavřete tlačítkem **Close**. Tlačítko **Start!** nemačkejte, jinak
    se soubory přejmenují.
 
 Nastavení se uloží do `wincmd.ini` (obvykle
-`%APPDATA%\GHISLER\wincmd.ini`) do sekce `[rename]`. Pokud je chcete zapsat
+`%APPDATA%\GHISLER\wincmd.ini`) do sekce `[rename]`. Pokud ho chcete zapsat
 ručně, zavřete nejdřív Total Commander (při ukončení by soubor přepsal)
 a do sekce `[rename]` přidejte:
 
@@ -108,16 +91,12 @@ a do sekce `[rename]` přidejte:
 Bez diakritiky_name=[=diacritics.Nazev bez diakritiky]
 Bez diakritiky_ext=[E]
 Bez diakritiky_params=0|1|1|1
-S diakritikou_name=[=diacritics.Nazev s diakritikou]
-S diakritikou_ext=[E]
-S diakritikou_params=0|1|1|1
 ```
 
 ## 3. Použití
 
 1. Označte soubory nebo složky a stiskněte **Ctrl+M**.
-2. V seznamu vpravo nahoře (nebo po F2) vyberte **Bez diakritiky** nebo
-   **S diakritikou**.
+2. V seznamu vpravo nahoře (nebo po F2) vyberte **Bez diakritiky**.
 3. Zkontrolujte sloupec **New name** a stiskněte **Start!**.
 4. Když se výsledek nelíbí, tlačítko **Undo** přejmenování vrátí.
 
@@ -128,46 +107,27 @@ mezery podtržítkem.
 
 - **Název pluginu pište malými písmeny:** `[=diacritics.…]`. Se zápisem
   `[=Diacritics.…]` ukazuje náhled u všech souborů `<Error>`.
-- **Pole „Cely nazev …“ už obsahují příponu.** Pokud je použijete
-  v masce jména, nechte masku přípony prázdnou, jinak vznikne
-  `nazev.flac.flac`. Pro přejmenování proto používejte pole „Nazev …“
-  a v příponě `[E]`.
-- **Doplňování diakritiky nezná kontext.** Každé slovo dostane svůj
-  nejčastější tvar, takže např. „ze“ se vždy změní na „že“. Slova, která
-  už nějakou diakritiku mají, se nemění. Velká a malá písmena zůstanou
-  zachována a slova psaná CamelCase se zpracují po částech
-  (`CeskyKrumlov` na `ČeskýKrumlov`).
+- **Pole „Cely nazev bez diakritiky“ už obsahuje příponu.** Pokud ho
+  použijete v masce jména, nechte masku přípony prázdnou, jinak vznikne
+  `nazev.flac.flac`. Pro přejmenování proto používejte pole „Nazev bez
+  diakritiky“ a v příponě `[E]`.
+- **Pole vkládané tlačítkem Plugin se přidá na místo kurzoru.** Původní
+  text masky (`[N]` nebo dříve vložené pole) zůstane. Před vložením masku
+  smažte, jinak se název v náhledu zopakuje několikrát.
 
-## 5. Vlastní slovník
-
-Ve složce pluginu je soubor `diacritics.user.txt` (UTF-8). Jeho položky mají
-přednost před hlavním slovníkem. Formáty řádků:
-
-```
-kůň        slovo s diakritikou, klíč „kun“ se odvodí sám
-ze=ze      pevný překlad: „ze“ nechat bez diakritiky
-# komentář
-```
-
-Ve složce v `C:\Program Files` jde soubor uložit jen s právy správce. Změna se
-projeví po restartu Total Commanderu.
-
-## 6. Sestavení ze zdrojů
+## 5. Sestavení ze zdrojů
 
 ### Předpoklady
 
 | Co | Poznámka |
 |---|---|
-| Windows 10 (1803) nebo novější | kvůli `curl` a PowerShellu, které jsou součástí systému |
+| Windows 10 nebo novější | PowerShell, který je součástí systému, vytvoří instalační archiv |
 | Visual Studio 2022 nebo novější s úlohou **Vývoj desktopových aplikací v C++** | stačí Community nebo Build Tools. Potřeba jsou překladače MSVC pro x64 i x86 (u této úlohy výchozí) a Windows SDK. Ověřeno s Visual Studiem 2026 Community (MSVC 14.52, Windows SDK 10.0.26100). |
-| Python 3.9 nebo novější | příkaz `python` musí být v PATH. Jen standardní knihovna, nic dalšího se neinstaluje. |
-| Připojení k internetu | jen při prvním sestavení, kvůli stažení seznamu slov (21 MB) |
-| Asi 60 MB místa na disku | seznam slov, slovník a výstupy v `out\` |
 
 Visual Studio skript najde sám (přes `vswhere.exe`). Je-li nainstalované
 jinde nebo chcete použít konkrétní verzi, nastavte předem proměnnou
-`VCVARS` na cestu k `vcvarsall.bat`. Když něco z předpokladů chybí, skript
-to na začátku ohlásí.
+`VCVARS` na cestu k `vcvarsall.bat`. Když Visual Studio chybí, skript to
+na začátku ohlásí.
 
 ### Sestavení
 
@@ -175,41 +135,13 @@ to na začátku ohlásí.
 build.cmd
 ```
 
-Skript stáhne seznam slov `data\src\cs_full.txt` (21 MB, není v gitu),
-pokud ještě chybí, sestaví z něj slovník (slova s aspoň 3 výskyty),
-32bitový `diacritics.wdx`, 64bitový `diacritics.wdx64`, testovací programy,
-instalační archiv `out\wdx_diacritics.zip` a diagnostický archiv
-`out\diacritics-diag.zip` (`diagnose.cmd` pro hledání chyb při načítání
-pluginu na jiném počítači).
-
-Slovník obsahuje jen tvary s diakritikou. Tvar bez diakritiky si plugin
-odvodí sám. Slova jsou seřazená a předponově kódovaná: každý řádek začíná
-znakem, který udává, kolik písmen má slovo společných s předchozím, a za
-ním následuje zbytek slova. Čitelné je jen záhlaví se zdrojem a licencí.
-Citoslovce z titulků se třemi stejnými písmeny za sebou („aaa“, „nooo“)
-se vynechávají. Popis formátu je v `tools/build_dict.py`.
+Skript sestaví 32bitový `diacritics.wdx`, 64bitový `diacritics.wdx64`,
+testovací programy, instalační archiv `out\wdx_diacritics.zip`
+a diagnostický archiv `out\diacritics-diag.zip` (jen `diagnose.cmd`, pro
+hledání chyb při načítání pluginu na jiném počítači).
 
 Test:
 
 ```bash
 out\test64.exe out\diacritics.wdx64
 ```
-
-## 7. Poděkování
-
-Doplňování diakritiky by nebylo možné bez práce těchto autorů:
-
-- **Hermit Dave** a projekt
-  [FrequencyWords](https://github.com/hermitdave/FrequencyWords), ze
-  kterého pochází český frekvenční seznam slov `cs_full.txt`. Obsah je pod
-  licencí [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-- **Korpus OpenSubtitles2018** z projektu [OPUS](https://opus.nlpl.eu/)
-  (Pierre Lison, Jörg Tiedemann, Milen Kouylekov), ze kterého byl seznam
-  slov spočítán, a web [OpenSubtitles.org](https://www.opensubtitles.org/),
-  odkud pocházejí titulky.
-
-Děkujeme.
-
-Slovník `diacritics.dic` je z tohoto seznamu odvozený (slova s aspoň
-3 výskyty, u každého jen nejčastější tvar s diakritikou), a proto je stejně
-jako zdroj šířen pod licencí CC BY-SA 4.0.
