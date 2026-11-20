@@ -2,6 +2,8 @@
 
 [Česky](README.cs.md) | English | [Summary](README.md)
 
+Version 0.4.0
+
 A content plugin (WDX) for Total Commander. It removes diacritics from file
 and folder names. You use it in the **Multi-Rename Tool** (Ctrl+M), which
 shows a preview before renaming and can undo the change.
@@ -41,24 +43,10 @@ The field names are Czech:
 | Cely nazev bez diakritiky | full name without diacritics | name with extension, diacritics removed |
 
 **"Error loading plugin file! The plugin probably needs some DLLs missing
-on your system."** The plugin needs no extra libraries (it depends only on
-system libraries of Windows). The most common cause is that the plugin
-files (`diacritics.wdx`, `diacritics.wdx64`) are blocked by **group policy**
-set by the computer's administrator (AppLocker, Software Restriction
-Policies), typically on company computers that allow only approved programs
-and libraries.
-
-To check: run `diagnose.cmd` (from `diacritics-diag.zip` or the `tools`
-folder). It uses only Windows commands and tries to load the plugin. The
-message "This program is blocked by group policy" (Czech: "Tento program
-je blokován zásadami skupiny") confirms a policy block.
-
-The plugin cannot and should not work around such a block. Ask the
-administrator for an exception: allow the plugin folder (path rule), or
-both plugin files by their SHA256 hash (`diagnose.cmd` prints it; the rule
-has to be renewed for every new version). Alternatively, the administrator
-can install the plugin into a folder the policy allows, usually
-`C:\Program Files`.
+on your system."** The plugin needs no extra libraries. Most often it is
+blocked by group policy set by the computer's administrator, typically on
+company computers. How to check it and what to do is described in
+[docs/diagnostics.en.md](docs/diagnostics.en.md).
 
 ## 2. Saved setting in the Multi-Rename Tool
 
@@ -137,10 +125,8 @@ build.cmd
 ```
 
 The script builds the 32-bit `diacritics.wdx`, the 64-bit
-`diacritics.wdx64`, test programs, the install archive
-`out\wdx_diacritics.zip` and the diagnostic archive
-`out\diacritics-diag.zip` (only `diagnose.cmd`, for tracking down plugin
-load errors on another computer).
+`diacritics.wdx64`, test programs and the install archive
+`out\wdx_diacritics.zip`.
 
 Test:
 

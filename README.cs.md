@@ -2,6 +2,8 @@
 
 Česky | [English](README.en.md) | [Shrnutí](README.md)
 
+Verze 0.4.0
+
 Obsahový plugin (WDX) pro Total Commander. Odstraní diakritiku z názvů
 souborů a složek. Používá se v nástroji **Hromadné přejmenování** (Ctrl+M),
 kde před přejmenováním uvidíte náhled a změnu můžete vrátit.
@@ -40,24 +42,10 @@ V levém seznamu musí být `diacritics` a vpravo jeho pole:
 | Cely nazev bez diakritiky | název i s příponou, diakritika odstraněna |
 
 **Hláška „Error loading plugin file! The plugin probably needs some DLLs
-missing on your system.“** Plugin žádné další knihovny nepotřebuje
-(závisí jen na systémových knihovnách Windows). Nejčastější příčinou je,
-že soubory pluginu (`diacritics.wdx`, `diacritics.wdx64`) blokují **zásady
-skupiny** nastavené správcem počítače (AppLocker, zásady omezení softwaru
-SRP), typicky na firemních počítačích, které povolují jen schválené
-programy a knihovny.
-
-Ověření: spusťte `diagnose.cmd` (z archivu `diacritics-diag.zip` nebo ze
-složky `tools`). Používá jen příkazy Windows a zkusí plugin načíst.
-Hlášení „Tento program je blokován zásadami skupiny“ (anglicky „This
-program is blocked by group policy“) potvrzuje blokaci zásadami.
-
-Takovou blokaci plugin obejít neumí a ani nemá. Požádejte správce
-o výjimku: povolení složky pluginu (pravidlo podle cesty), nebo obou
-souborů pluginu podle otisku SHA256 (vypíše ho `diagnose.cmd`; po každé
-nové verzi je potřeba pravidlo obnovit). Další možností je, aby správce
-plugin nainstaloval do složky, kterou zásady povolují, obvykle
-`C:\Program Files`.
+missing on your system.“** Plugin žádné další knihovny nepotřebuje.
+Nejčastěji ho blokují zásady skupiny nastavené správcem počítače, typicky
+na firemních počítačích. Jak to ověřit a co s tím, popisuje
+[docs/diagnostics.cs.md](docs/diagnostics.cs.md).
 
 ## 2. Uložené nastavení v Hromadném přejmenování
 
@@ -136,9 +124,7 @@ build.cmd
 ```
 
 Skript sestaví 32bitový `diacritics.wdx`, 64bitový `diacritics.wdx64`,
-testovací programy, instalační archiv `out\wdx_diacritics.zip`
-a diagnostický archiv `out\diacritics-diag.zip` (jen `diagnose.cmd`, pro
-hledání chyb při načítání pluginu na jiném počítači).
+testovací programy a instalační archiv `out\wdx_diacritics.zip`.
 
 Test:
 

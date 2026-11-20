@@ -1,5 +1,7 @@
 # Diacritics
 
+Version / verze 0.4.0
+
 A Total Commander content plugin (WDX) that removes diacritics from file and
 folder names, for Latin letters of all languages. It is used in the
 Multi-Rename Tool (Ctrl+M), with a preview before renaming and Undo
