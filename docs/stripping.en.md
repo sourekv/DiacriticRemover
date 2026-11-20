@@ -63,7 +63,12 @@ followed by the mark.
 ## What the plugin leaves unchanged
 
 - **Other scripts** (Cyrillic, Greek and others). That is not diacritics but
-  transliteration to Latin, which the plugin does not do.
+  transliteration to Latin, which the plugin deliberately does not do. Total
+  Commander already has the
+  [Translit_wdx](https://totalcmd.net/plugring/Translit2.html) plugin
+  (32 and 64 bit), which transliterates Cyrillic, Greek and other scripts in
+  the Multi-Rename Tool, for example with the mask
+  `[=wdx_translit.(INT) Rus2lat]`. Diacritics therefore sticks to diacritics.
 - **Digits, punctuation and symbols** (–, „“, ©, € and so on).
 - **Latin letters that do not decompose and are not in the table above.**
   There are 139 of them, mostly phonetic or historic characters. Letters of

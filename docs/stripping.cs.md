@@ -62,7 +62,11 @@ základní písmeno a za ním znaménko.
 ## Co plugin nemění
 
 - **Jiná písma** (azbuka, řečtina a další). Nejde o diakritiku, ale
-  o přepis do latinky, a ten plugin nedělá.
+  o přepis do latinky, a ten plugin záměrně nedělá. Pro Total Commander
+  už existuje plugin [Translit_wdx](https://totalcmd.net/plugring/Translit2.html)
+  (32 i 64 bit), který přepisuje cyrilici, řečtinu a další písma
+  v Hromadném přejmenování, například maskou `[=wdx_translit.(INT) Rus2lat]`.
+  Diacritics se proto drží jen diakritiky.
 - **Číslice, interpunkce a symboly** (–, „“, ©, € a podobně).
 - **Latinková písmena, která se nerozkládají a nejsou v tabulce výše.** Je
   jich 139, většinou jde o fonetické nebo historické znaky. Z písmen
