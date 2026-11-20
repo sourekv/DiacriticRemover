@@ -44,6 +44,27 @@ V levém seznamu musí být `tcaccents` a vpravo jeho pole:
 | Cely nazev bez diakritiky | název i s příponou, diakritika odstraněna |
 | Cely nazev s diakritikou | název i s příponou, diakritika doplněna |
 
+**Hláška „Error loading plugin file! The plugin probably needs some DLLs
+missing on your system.“** Plugin žádné další knihovny nepotřebuje
+(závisí jen na systémových `KERNEL32.dll` a `USER32.dll`). Nejčastější
+příčinou je, že soubory pluginu (`TcAccents.wdx`, `TcAccents.wdx64`)
+blokují **zásady skupiny** nastavené správcem počítače (AppLocker, zásady
+omezení softwaru SRP), typicky na firemních počítačích, které povolují
+jen schválené programy a knihovny. Slovník `TcAccents.dic` je jen datový
+soubor a zásady se ho netýkají.
+
+Ověření: spusťte `diagnose.cmd` (z archivu `TcAccents-diag.zip` nebo ze
+složky `tools`). Používá jen příkazy Windows a zkusí plugin načíst.
+Hlášení „Tento program je blokován zásadami skupiny“ (anglicky „This
+program is blocked by group policy“) potvrzuje blokaci zásadami.
+
+Takovou blokaci plugin obejít neumí a ani nemá. Požádejte správce
+o výjimku: povolení složky pluginu (pravidlo podle cesty), nebo obou
+souborů pluginu podle otisku SHA256 (vypíše ho `diagnose.cmd`; po každé
+nové verzi je potřeba pravidlo obnovit). Další možností je, aby správce
+plugin nainstaloval do složky, kterou zásady povolují, obvykle
+`C:\Program Files`.
+
 ## 2. Uložená nastavení v Hromadném přejmenování
 
 Abyste masku nemuseli pokaždé vypisovat, uložte si ji jednou jako

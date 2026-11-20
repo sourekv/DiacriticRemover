@@ -49,6 +49,27 @@ The field names are Czech:
 | Cely nazev bez diakritiky | full name without diacritics | name with extension, diacritics removed |
 | Cely nazev s diakritikou | full name with diacritics | name with extension, diacritics added |
 
+**"Error loading plugin file! The plugin probably needs some DLLs missing
+on your system."** The plugin needs no extra libraries (it depends only on
+the system `KERNEL32.dll` and `USER32.dll`). The most common cause is that
+the plugin files (`TcAccents.wdx`, `TcAccents.wdx64`) are blocked by
+**group policy** set by the computer's administrator (AppLocker, Software
+Restriction Policies), typically on company computers that allow only
+approved programs and libraries. The dictionary `TcAccents.dic` is a plain
+data file and is not affected by these policies.
+
+To check: run `diagnose.cmd` (from `TcAccents-diag.zip` or the `tools`
+folder). It uses only Windows commands and tries to load the plugin. The
+message "This program is blocked by group policy" (Czech: "Tento program
+je blokován zásadami skupiny") confirms a policy block.
+
+The plugin cannot and should not work around such a block. Ask the
+administrator for an exception: allow the plugin folder (path rule), or
+both plugin files by their SHA256 hash (`diagnose.cmd` prints it; the rule
+has to be renewed for every new version). Alternatively, the administrator
+can install the plugin into a folder the policy allows, usually
+`C:\Program Files`.
+
 ## 2. Saved settings in the Multi-Rename Tool
 
 To avoid typing the mask every time, save it once as a named setting.
