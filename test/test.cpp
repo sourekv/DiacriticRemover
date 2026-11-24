@@ -1,5 +1,7 @@
 // Loads the plugin like Total Commander does and prints all fields for sample names.
 // Usage: test.exe <plugin.wdx|wdx64> [name ...]
+// Copyright (C) 2026 Vladimir Sourek
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include <windows.h>
 #include <cstdio>
 

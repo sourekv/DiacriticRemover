@@ -131,3 +131,11 @@ Test:
 ```bash
 out\test64.exe out\diacritics.wdx64
 ```
+
+## 6. Licence
+
+Copyright (C) 2026 Vladimir Sourek. Plugin je svobodný software pod
+licencí [GNU GPL verze 3](LICENSE) nebo (podle vaší volby) jakékoli
+pozdější verze. Můžete ho používat, šířit i upravovat. Kdo šíří upravenou
+verzi, musí ji šířit pod stejnou licencí i se zdrojovým kódem. Plugin je
+poskytován bez jakékoli záruky.

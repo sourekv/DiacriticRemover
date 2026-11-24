@@ -133,3 +133,11 @@ Test:
 ```bash
 out\test64.exe out\diacritics.wdx64
 ```
+
+## 6. License
+
+Copyright (C) 2026 Vladimir Sourek. The plugin is free software under the
+[GNU GPL version 3](LICENSE) or (at your option) any later version. You may
+use, share and modify it. If you distribute a modified version, you must do
+so under the same license, with the source code. The plugin comes with no
+warranty.

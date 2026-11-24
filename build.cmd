@@ -39,8 +39,9 @@ rem ---- Install zip -------------------------------------------------------
 copy /y dist\pluginst.inf out\ >nul
 copy /y README.cs.md out\readme_cs.txt >nul
 copy /y README.en.md out\readme_en.txt >nul
+copy /y LICENSE out\license.txt >nul
 if exist out\wdx_diacritics.zip del out\wdx_diacritics.zip
-powershell -NoProfile -Command "Compress-Archive -Path out\diacritics.wdx,out\diacritics.wdx64,out\pluginst.inf,out\readme_cs.txt,out\readme_en.txt -DestinationPath out\wdx_diacritics.zip" || exit /b 1
+powershell -NoProfile -Command "Compress-Archive -Path out\diacritics.wdx,out\diacritics.wdx64,out\pluginst.inf,out\readme_cs.txt,out\readme_en.txt,out\license.txt -DestinationPath out\wdx_diacritics.zip" || exit /b 1
 
 rem ---- Diagnostic zip (issue #1): diagnose.cmd only, uses Windows commands
 if exist out\diacritics-diag.zip del out\diacritics-diag.zip

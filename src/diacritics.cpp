@@ -1,6 +1,8 @@
 // Diacritics - Total Commander content plugin (WDX)
 // Provides file name fields without diacritics, for use in the Multi-Rename
 // Tool (Ctrl+M): [=diacritics.<field>]
+// Copyright (C) 2026 Vladimir Sourek
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

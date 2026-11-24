@@ -17,6 +17,8 @@ on it in Total Commander and confirm. Then use the mask
 
 Full guide in English: [README.en.md](README.en.md)
 
+License: [GNU GPL v3 or later](LICENSE).
+
 ---
 
 Obsahový plugin (WDX) pro Total Commander, který odstraní diakritiku z názvů
@@ -33,3 +35,5 @@ v Total Commanderu na něm stiskněte Enter a potvrďte. Pak v Ctrl+M použijte
 masku `[=diacritics.Nazev bez diakritiky]`.
 
 Podrobný návod česky: [README.cs.md](README.cs.md)
+
+Licence: [GNU GPL v3 nebo novější](LICENSE).
