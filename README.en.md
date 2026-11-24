@@ -2,7 +2,7 @@
 
 [Česky](README.cs.md) | English | [Summary](README.md)
 
-Version 0.4.0
+Version 0.5.0
 
 A content plugin (WDX) for Total Commander. It removes diacritics from file
 and folder names. You use it in the **Multi-Rename Tool** (Ctrl+M), which
@@ -34,13 +34,14 @@ the plugin folder by hand (as administrator).
 
 **Check:** press Ctrl+M and click the **Plugin** button (`[=?]`).
 The left list must contain `diacritics`, and the right list its fields.
-The field names are Czech:
+Up to version 0.4.0 the field names were Czech; masks using them have to be
+rewritten:
 
-| Field | Meaning | Returns |
-|---|---|---|
-| Nazev bez diakritiky | name without diacritics | name without extension, diacritics removed |
-| Pripona bez diakritiky | extension without diacritics | extension, diacritics removed |
-| Cely nazev bez diakritiky | full name without diacritics | name with extension, diacritics removed |
+| Field | Returns |
+|---|---|
+| Name without diacritics | name without extension, diacritics removed |
+| Extension without diacritics | extension, diacritics removed |
+| Full name without diacritics | name with extension, diacritics removed |
 
 **"Error loading plugin file! The plugin probably needs some DLLs missing
 on your system."** The plugin needs no extra libraries. Most often it is
@@ -56,11 +57,11 @@ To avoid typing the mask every time, save it once as a named setting.
 2. In the **Rename mask: file name** field, type:
 
    ```
-   [=diacritics.Nazev bez diakritiky]
+   [=diacritics.Name without diacritics]
    ```
 
    Or clear the field and insert it with **Plugin** > `diacritics` >
-   *Nazev bez diakritiky* > OK.
+   *Name without diacritics* > OK.
 3. Leave `[E]` in the **Extension** field.
 4. Check the preview in the **New name** column, e.g. `Časné Ráno.flac`
    becomes `Casne Rano.flac`.
@@ -76,7 +77,7 @@ hand, first close Total Commander (it rewrites the file on exit), then add
 to the `[rename]` section:
 
 ```ini
-Remove diacritics_name=[=diacritics.Nazev bez diakritiky]
+Remove diacritics_name=[=diacritics.Name without diacritics]
 Remove diacritics_ext=[E]
 Remove diacritics_params=0|1|1|1
 ```
@@ -96,9 +97,9 @@ underscores in the **Search for** field.
 
 - **Write the plugin name in lowercase:** `[=diacritics.…]`. With
   `[=Diacritics.…]` the preview shows `<Error>` for every file.
-- **The "Cely nazev bez diakritiky" field already includes the extension.**
+- **The "Full name without diacritics" field already includes the extension.**
   If you use it in the name mask, leave the extension mask empty, or you
-  get `name.flac.flac`. For renaming, use "Nazev bez diakritiky" with `[E]`
+  get `name.flac.flac`. For renaming, use "Name without diacritics" with `[E]`
   as the extension.
 - **The Plugin button inserts the field at the cursor.** The old text of the
   mask (`[N]` or a field inserted before) stays. Clear the mask first, or

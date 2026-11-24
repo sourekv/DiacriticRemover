@@ -3,7 +3,7 @@
 ClipDiac.exe (2003) holds four 128-byte tables that map the upper half
 (0x80-0xFF) of Kamenicky, CP852, ISO-8859-2 and Windows-1250 to ASCII;
 '_' means "leave unchanged". For every byte this script decodes the
-character, asks the plugin (field "Cely nazev bez diakritiky") and prints
+character, asks the plugin (field "Full name without diacritics") and prints
 the cases where the two differ.
 
 Usage (64-bit Python):
@@ -39,7 +39,7 @@ def main(exe, wdx):
     buf = ctypes.create_unicode_buffer(1024)
 
     def strip(ch):
-        get("C:\\x\\" + ch, 3, 0, buf, ctypes.sizeof(buf), 0)
+        get("C:\\x\\" + ch, 2, 0, buf, ctypes.sizeof(buf), 0)
         return buf.value
 
     for enc, table in zip(ENCODINGS, tables):

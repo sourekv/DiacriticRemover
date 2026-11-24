@@ -2,7 +2,7 @@
 
 Česky | [English](README.en.md) | [Shrnutí](README.md)
 
-Verze 0.4.0
+Verze 0.5.0
 
 Obsahový plugin (WDX) pro Total Commander. Odstraní diakritiku z názvů
 souborů a složek. Používá se v nástroji **Hromadné přejmenování** (Ctrl+M),
@@ -33,13 +33,15 @@ plugin načtený, zavřete Total Commander a soubory z archivu nakopírujte do
 složky pluginu ručně (jako správce).
 
 **Kontrola:** stiskněte Ctrl+M, klikněte na tlačítko **Plugin** (`[=?]`).
-V levém seznamu musí být `diacritics` a vpravo jeho pole:
+V levém seznamu musí být `diacritics` a vpravo jeho pole. Názvy polí jsou
+anglicky, aby jim rozuměli uživatelé všech jazyků (do verze 0.4.0 byly
+česky, staré masky je potřeba přepsat):
 
 | Pole | Co vrací |
 |---|---|
-| Nazev bez diakritiky | název bez přípony, diakritika odstraněna |
-| Pripona bez diakritiky | přípona, diakritika odstraněna |
-| Cely nazev bez diakritiky | název i s příponou, diakritika odstraněna |
+| Name without diacritics | název bez přípony, diakritika odstraněna |
+| Extension without diacritics | přípona, diakritika odstraněna |
+| Full name without diacritics | název i s příponou, diakritika odstraněna |
 
 **Hláška „Error loading plugin file! The plugin probably needs some DLLs
 missing on your system.“** Plugin žádné další knihovny nepotřebuje.
@@ -56,11 +58,11 @@ pojmenované nastavení.
 2. Do pole **Rename mask: file name** (Maska pro jméno) napište:
 
    ```
-   [=diacritics.Nazev bez diakritiky]
+   [=diacritics.Name without diacritics]
    ```
 
    Nebo pole smažte a vložte ho tlačítkem **Plugin** > `diacritics` >
-   *Nazev bez diakritiky* > OK.
+   *Name without diacritics* > OK.
 3. V poli **Extension** (přípona) nechte `[E]`.
 4. Ve sloupci **New name** zkontrolujte náhled, např. `Časné Ráno.flac`
    na `Casne Rano.flac`.
@@ -76,7 +78,7 @@ ručně, zavřete nejdřív Total Commander (při ukončení by soubor přepsal)
 a do sekce `[rename]` přidejte:
 
 ```ini
-Bez diakritiky_name=[=diacritics.Nazev bez diakritiky]
+Bez diakritiky_name=[=diacritics.Name without diacritics]
 Bez diakritiky_ext=[E]
 Bez diakritiky_params=0|1|1|1
 ```
@@ -95,10 +97,10 @@ mezery podtržítkem.
 
 - **Název pluginu pište malými písmeny:** `[=diacritics.…]`. Se zápisem
   `[=Diacritics.…]` ukazuje náhled u všech souborů `<Error>`.
-- **Pole „Cely nazev bez diakritiky“ už obsahuje příponu.** Pokud ho
+- **Pole „Full name without diacritics“ už obsahuje příponu.** Pokud ho
   použijete v masce jména, nechte masku přípony prázdnou, jinak vznikne
-  `nazev.flac.flac`. Pro přejmenování proto používejte pole „Nazev bez
-  diakritiky“ a v příponě `[E]`.
+  `nazev.flac.flac`. Pro přejmenování proto používejte pole „Name without
+  diacritics“ a v příponě `[E]`.
 - **Pole vkládané tlačítkem Plugin se přidá na místo kurzoru.** Původní
   text masky (`[N]` nebo dříve vložené pole) zůstane. Před vložením masku
   smažte, jinak se název v náhledu zopakuje několikrát.

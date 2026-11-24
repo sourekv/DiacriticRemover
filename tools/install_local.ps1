@@ -3,7 +3,8 @@
 #   powershell -ExecutionPolicy Bypass -File tools\install_local.ps1
 # Steps: close TC (it rewrites wincmd.ini on exit), copy files as administrator
 # (UAC prompt), switch [ContentPlugins] and the rename masks in wincmd.ini to
-# diacritics, drop the "S diakritikou" preset, start TC again. A backup of
+# diacritics, rewrite masks to the English field
+# names, drop the "S diakritikou" preset, start TC again. A backup of
 # wincmd.ini is kept next to it.
 param(
     [string]$PluginRoot = 'C:\Program Files\TotalCommander\plugins\wdx',
@@ -25,7 +26,7 @@ foreach ($p in $tc) {
 
 # 2. Copy files as administrator, remove the old plugin folder and the
 #    dictionary files of versions up to 0.3.1
-$files = 'diacritics.wdx', 'diacritics.wdx64', 'readme_cs.txt', 'readme_en.txt' |
+$files = 'diacritics.wdx', 'diacritics.wdx64', 'readme_cs.txt', 'readme_en.txt', 'license.txt' |
     ForEach-Object { Join-Path $out $_ }
 $list = ($files | ForEach-Object { "'$_'" }) -join ','
 $cmd = "`$ErrorActionPreference='Stop'; New-Item -ItemType Directory -Force '$newDir' | Out-Null; " +
@@ -41,6 +42,10 @@ $enc = [Text.Encoding]::GetEncoding(28591)  # byte-preserving, ini is ANSI
 $text = [IO.File]::ReadAllText($ini, $enc)
 $text = $text -replace '(?im)^(\d+)=[^\r\n]*\\TcAccents\\TcAccents\.wdx(?=[ \t]*\r?$)', "`$1=$newDir\diacritics.wdx"
 $text = $text -replace '(?i)\[=tcaccents\.', '[=diacritics.'
+# Field names are English since 0.5.0: rewrite masks with the Czech ones.
+$text = $text -replace '(?i)\[=diacritics\.Nazev bez diakritiky\]', '[=diacritics.Name without diacritics]'
+$text = $text -replace '(?i)\[=diacritics\.Pripona bez diakritiky\]', '[=diacritics.Extension without diacritics]'
+$text = $text -replace '(?i)\[=diacritics\.Cely nazev bez diakritiky\]', '[=diacritics.Full name without diacritics]'
 # The "with diacritics" fields were removed after 0.3.1: drop their preset.
 $text = $text -replace '(?im)^S diakritikou_(name|ext|params)=[^\r\n]*\r?\n', ''
 [IO.File]::WriteAllText($ini, $text, $enc)

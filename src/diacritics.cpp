@@ -32,10 +32,12 @@ enum Field {
     F_COUNT
 };
 
+// English names: Total Commander stores them in masks and translates them
+// for display with diacritics.lng (dist/diacritics.lng).
 static const char* kFieldNames[F_COUNT] = {
-    "Nazev bez diakritiky",
-    "Pripona bez diakritiky",
-    "Cely nazev bez diakritiky",
+    "Name without diacritics",
+    "Extension without diacritics",
+    "Full name without diacritics",
 };
 
 // ---- Globals ---------------------------------------------------------------
