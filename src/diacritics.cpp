@@ -1,6 +1,7 @@
 // Diacritics - Total Commander content plugin (WDX)
-// Provides file name fields without diacritics, for use in the Multi-Rename
-// Tool (Ctrl+M): [=diacritics.<field>]
+// Provides file name fields without diacritics, or with diacritics broken
+// by a wrong encoding fixed, for use in the Multi-Rename Tool (Ctrl+M):
+// [=diacritics.<field>]
 // Copyright (C) 2026 Vladimir Sourek
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -29,15 +30,21 @@ enum Field {
     F_NAME_STRIP,   // name without extension, diacritics removed
     F_EXT_STRIP,    // extension, diacritics removed
     F_FULL_STRIP,   // whole name, diacritics removed
+    F_NAME_FIX,     // name without extension, broken encoding repaired
+    F_EXT_FIX,      // extension, broken encoding repaired
+    F_FULL_FIX,     // whole name, broken encoding repaired
     F_COUNT
 };
 
-// English names: Total Commander stores them in masks and translates them
-// for display with diacritics.lng (dist/diacritics.lng).
+// English names, so that users of all languages understand them. Total
+// Commander stores them in rename masks, so changing them breaks old masks.
 static const char* kFieldNames[F_COUNT] = {
     "Name without diacritics",
     "Extension without diacritics",
     "Full name without diacritics",
+    "Name with fixed diacritics",
+    "Extension with fixed diacritics",
+    "Full name with fixed diacritics",
 };
 
 // ---- Globals ---------------------------------------------------------------
@@ -117,6 +124,67 @@ static void SplitExt(const std::wstring& name, std::wstring& stem, std::wstring&
     else { stem = name.substr(0, dot); ext = name.substr(dot + 1); }
 }
 
+// ---- Repairing broken encoding ---------------------------------------------
+// A UTF-8 name read in a single-byte code page shows each accented letter as
+// two or three wrong characters: "Kaffeebehälter" becomes "Kaffeebeh├ñlter"
+// (DOS 437) or "KaffeebehÃ¤lter" (Windows 1252). Turn the characters back
+// into bytes of that code page and read the bytes as UTF-8. The result is
+// accepted only when every character exists in the code page and the bytes
+// are valid UTF-8, which practically never happens for a correct name.
+static bool TryCodePage(const std::wstring& s, UINT cp, std::wstring& out) {
+    BOOL usedDefault = FALSE;
+    int n = WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, s.c_str(), (int)s.size(),
+                                nullptr, 0, nullptr, &usedDefault);
+    if (n <= 0 || usedDefault) return false;
+    std::string bytes(n, '\0');
+    WideCharToMultiByte(cp, WC_NO_BEST_FIT_CHARS, s.c_str(), (int)s.size(), &bytes[0], n,
+                        nullptr, &usedDefault);
+    if (usedDefault) return false;
+    // The round trip must give the same text (no character was approximated).
+    int m = MultiByteToWideChar(cp, 0, bytes.data(), n, nullptr, 0);
+    std::wstring back(m, L'\0');
+    MultiByteToWideChar(cp, 0, bytes.data(), n, &back[0], m);
+    if (back != s) return false;
+    int u = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, bytes.data(), n, nullptr, 0);
+    if (u <= 0) return false;
+    out.assign(u, L'\0');
+    MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, bytes.data(), n, &out[0], u);
+    return out != s;
+}
+
+// Characters outside the common alphabets (Latin with accents, Greek,
+// Cyrillic) make a repair less likely to be the right one.
+static int Rarity(const std::wstring& s) {
+    int r = 0;
+    for (wchar_t c : s)
+        if (!(c < 0x80 || (c >= 0xA0 && c <= 0x17F) || (c >= 0x370 && c <= 0x4FF) ||
+              (c >= 0x1E00 && c <= 0x1EFF) || (c >= 0x2010 && c <= 0x2026)))
+            ++r;
+    return r;
+}
+
+static std::wstring FixEncoding(std::wstring s) {
+    // Several code pages may give valid UTF-8, e.g. "Ã©" is "é" read in 1252
+    // but also a rare letter read in DOS 850. Take the least rare result; on
+    // a tie the order below decides.
+    static const UINT kCodePages[] = {437, 850, 852, 1252, 1250};
+    for (int round = 0; round < 3; ++round) {  // repairs double damage too
+        bool nonAscii = false;
+        for (wchar_t c : s) if (c >= 0x80) nonAscii = true;
+        if (!nonAscii) break;
+        std::wstring best, fixed;
+        int bestRarity = 0x7FFFFFFF;
+        for (UINT cp : kCodePages)
+            if (TryCodePage(s, cp, fixed)) {
+                int r = Rarity(fixed);
+                if (r < bestRarity) { best = fixed; bestRarity = r; }
+            }
+        if (best.empty()) break;
+        s = best;
+    }
+    return s;
+}
+
 static bool ComputeField(int field, const wchar_t* fileName, std::wstring& out) {
     std::wstring name = BaseName(fileName), stem, ext;
     SplitExt(name, stem, ext);
@@ -124,6 +192,9 @@ static bool ComputeField(int field, const wchar_t* fileName, std::wstring& out) 
         case F_NAME_STRIP: out = StripAccents(stem); return true;
         case F_EXT_STRIP:  out = StripAccents(ext); return true;
         case F_FULL_STRIP: out = StripAccents(name); return true;
+        case F_NAME_FIX:   out = FixEncoding(stem); return true;
+        case F_EXT_FIX:    out = FixEncoding(ext); return true;
+        case F_FULL_FIX:   out = FixEncoding(name); return true;
     }
     return false;
 }

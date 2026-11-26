@@ -3,9 +3,9 @@
 #   powershell -ExecutionPolicy Bypass -File tools\install_local.ps1
 # Steps: close TC (it rewrites wincmd.ini on exit), copy files as administrator
 # (UAC prompt), switch [ContentPlugins] and the rename masks in wincmd.ini to
-# diacritics, rewrite masks to the English field
-# names, drop the "S diakritikou" preset, start TC again. A backup of
-# wincmd.ini is kept next to it.
+# diacritics, rewrite masks to the English field names, add the "Opravit
+# diakritiku" preset, drop the "S diakritikou" preset, start TC again.
+# A backup of wincmd.ini is kept next to it.
 param(
     [string]$PluginRoot = 'C:\Program Files\TotalCommander\plugins\wdx',
     [string]$TcExe = 'C:\Program Files\TotalCommander\TOTALCMD64.EXE'
@@ -48,6 +48,12 @@ $text = $text -replace '(?i)\[=diacritics\.Pripona bez diakritiky\]', '[=diacrit
 $text = $text -replace '(?i)\[=diacritics\.Cely nazev bez diakritiky\]', '[=diacritics.Full name without diacritics]'
 # The "with diacritics" fields were removed after 0.3.1: drop their preset.
 $text = $text -replace '(?im)^S diakritikou_(name|ext|params)=[^\r\n]*\r?\n', ''
+# Second preset "Opravit diakritiku" (0.6.0), added after "Bez diakritiky".
+if ($text -notmatch '(?im)^Opravit diakritiku_name=') {
+    $preset = "Opravit diakritiku_name=[=diacritics.Name with fixed diacritics]`r`n" +
+              "Opravit diakritiku_ext=[E]`r`nOpravit diakritiku_params=0|1|1|1`r`n"
+    $text = $text -replace '(?im)(^Bez diakritiky_params=[^\r\n]*\r?\n)', "`$1$preset"
+}
 [IO.File]::WriteAllText($ini, $text, $enc)
 
 # 4. Start Total Commander again

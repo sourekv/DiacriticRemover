@@ -2,7 +2,7 @@
 
 Česky | [English](README.en.md) | [Shrnutí](README.md)
 
-Verze 0.5.0
+Verze 0.6.0
 
 Obsahový plugin (WDX) pro Total Commander. Odstraní diakritiku z názvů
 souborů a složek. Používá se v nástroji **Hromadné přejmenování** (Ctrl+M),
@@ -16,6 +16,16 @@ kde před přejmenováním uvidíte náhled a změnu můžete vrátit.
 
 Diakritiku odstraní z latinkových písmen všech jazyků (podrobnosti
 v [docs/stripping.cs.md](docs/stripping.cs.md)).
+
+Druhá varianta diakritiku naopak **opraví** v názvech, které poškodilo
+špatné kódování. Takové názvy vznikají, když program přečte název
+v kódování UTF-8 jako starou kódovou stránku:
+
+| Poškozený název | Opravený název |
+|---|---|
+| `Kaffeebeh├ñlter.3mf` | `Kaffeebehälter.3mf` |
+| `pĹ™Ă­loha.doc` | `příloha.doc` |
+| `cafÃ©.txt` | `café.txt` |
 
 ## 1. Instalace
 
@@ -42,6 +52,9 @@ anglicky, aby jim rozuměli uživatelé všech jazyků (do verze 0.4.0 byly
 | Name without diacritics | název bez přípony, diakritika odstraněna |
 | Extension without diacritics | přípona, diakritika odstraněna |
 | Full name without diacritics | název i s příponou, diakritika odstraněna |
+| Name with fixed diacritics | název bez přípony, poškozená diakritika opravena |
+| Extension with fixed diacritics | přípona, poškozená diakritika opravena |
+| Full name with fixed diacritics | název i s příponou, poškozená diakritika opravena |
 
 **Hláška „Error loading plugin file! The plugin probably needs some DLLs
 missing on your system.“** Plugin žádné další knihovny nepotřebuje.
@@ -83,10 +96,20 @@ Bez diakritiky_ext=[E]
 Bez diakritiky_params=0|1|1|1
 ```
 
+Stejně si uložte druhé nastavení `Opravit diakritiku` s maskou
+`[=diacritics.Name with fixed diacritics]`:
+
+```ini
+Opravit diakritiku_name=[=diacritics.Name with fixed diacritics]
+Opravit diakritiku_ext=[E]
+Opravit diakritiku_params=0|1|1|1
+```
+
 ## 3. Použití
 
 1. Označte soubory nebo složky a stiskněte **Ctrl+M**.
-2. V seznamu vpravo nahoře (nebo po F2) vyberte **Bez diakritiky**.
+2. V seznamu vpravo nahoře (nebo po F2) vyberte **Bez diakritiky**, nebo
+   **Opravit diakritiku**.
 3. Zkontrolujte sloupec **New name** a stiskněte **Start!**.
 4. Když se výsledek nelíbí, tlačítko **Undo** přejmenování vrátí.
 
@@ -104,6 +127,10 @@ mezery podtržítkem.
 - **Pole vkládané tlačítkem Plugin se přidá na místo kurzoru.** Původní
   text masky (`[N]` nebo dříve vložené pole) zůstane. Před vložením masku
   smažte, jinak se název v náhledu zopakuje několikrát.
+- **Oprava diakritiky pozná jen poškození kódováním.** Pomůže u názvů
+  v UTF-8 přečtených jako DOS 437, 850, 852 nebo Windows 1250, 1252.
+  Názvy, které takto poškozené nejsou, nechá beze změny. Výsledek
+  zkontrolujte v náhledu.
 
 ## 5. Sestavení ze zdrojů
 

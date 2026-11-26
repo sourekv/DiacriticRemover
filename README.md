@@ -1,6 +1,6 @@
 # Diacritics
 
-Version / verze 0.5.0
+Version / verze 0.6.0
 
 A Total Commander content plugin (WDX) that removes diacritics from file and
 folder names, for Latin letters of all languages. It is used in the
@@ -9,6 +9,10 @@ afterwards.
 
 - `Žlutý kůň.jpg` becomes `Zluty kun.jpg`
 - `Łódź, Straße, Đoković.txt` becomes `Lodz, Strasse, Dokovic.txt`
+
+A second option fixes diacritics broken by a wrong encoding:
+`Kaffeebeh├ñlter.3mf` becomes `Kaffeebehälter.3mf`
+(mask `[=diacritics.Name with fixed diacritics]`).
 
 Install: download `wdx_diacritics.zip` from
 [Releases](https://github.com/sourekv/DiacriticRemover/releases), press Enter
@@ -28,6 +32,10 @@ a možností vrátit změnu tlačítkem Undo.
 
 - `Žlutý kůň.jpg` se změní na `Zluty kun.jpg`
 - `Łódź, Straße, Đoković.txt` se změní na `Lodz, Strasse, Dokovic.txt`
+
+Druhá varianta opraví diakritiku poškozenou špatným kódováním:
+`pĹ™Ă­loha.doc` se změní na `příloha.doc`
+(maska `[=diacritics.Name with fixed diacritics]`).
 
 Instalace: stáhněte `wdx_diacritics.zip` z
 [Releases](https://github.com/sourekv/DiacriticRemover/releases),

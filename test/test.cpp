@@ -41,6 +41,10 @@ int wmain(int argc, wchar_t** argv) {
         L"C:\\Docs\\Łódź, Straße, Ærø, Đoković, Ħamrun.příloha",
         L"C:\\Docs\\Složka s diakritikou\\",
         L"C:\\Docs\\.gitignore",
+        L"C:\\Docs\\Krups_EA8160_Kaffeebeh\u251C\u00F1lter_v4.3mf",  // UTF-8 read as DOS 437
+        L"C:\\Docs\\Kaffeebeh\u00C3\u00A4lter.txt",  // UTF-8 read as Windows 1252
+        L"C:\\Docs\\\u00C3\u00A9t\u00C3\u00A9.txt",  // valid in DOS 850 too, 1252 must win
+        L"C:\\Docs\\P\u0159\u00EDli\u0161 \u017Elu\u0165ou\u010Dk\u00FD.txt",  // correct name stays
     };
     int n = argc > 2 ? argc - 2 : (int)(sizeof(defaults) / sizeof(*defaults));
     for (int i = 0; i < n; ++i) {
@@ -50,7 +54,7 @@ int wmain(int argc, wchar_t** argv) {
         for (int f = 0; getField(f, field, units, sizeof(field)) != 0; ++f) {
             WCHAR value[1024];
             int r = getValue((WCHAR*)name, f, 0, value, sizeof(value), 0);
-            printf("  %-28s ", field);
+            printf("  %-31s ", field);
             if (r == 11) Print(value); else printf("(result %d)", r);
             Print(L"\n");
         }

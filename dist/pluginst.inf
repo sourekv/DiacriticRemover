@@ -1,5 +1,5 @@
 [plugininstall]
-description=Diacritics - odstraneni diakritiky z nazvu souboru (Multi-Rename)
+description=Diacritics - remove or fix diacritics in file names (Multi-Rename)
 type=wdx
 file=diacritics.wdx
 defaultdir=Diacritics

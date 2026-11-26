@@ -2,7 +2,7 @@
 
 [Česky](README.cs.md) | English | [Summary](README.md)
 
-Version 0.5.0
+Version 0.6.0
 
 A content plugin (WDX) for Total Commander. It removes diacritics from file
 and folder names. You use it in the **Multi-Rename Tool** (Ctrl+M), which
@@ -16,6 +16,16 @@ shows a preview before renaming and can undo the change.
 
 It works for Latin letters of all languages (details in
 [docs/stripping.en.md](docs/stripping.en.md)).
+
+A second option does the opposite: it **fixes** diacritics in names broken
+by a wrong encoding. Such names appear when a program reads a UTF-8 name as
+an old code page:
+
+| Broken name | Fixed name |
+|---|---|
+| `Kaffeebeh├ñlter.3mf` | `Kaffeebehälter.3mf` |
+| `pĹ™Ă­loha.doc` | `příloha.doc` |
+| `cafÃ©.txt` | `café.txt` |
 
 ## 1. Installation
 
@@ -42,6 +52,9 @@ rewritten:
 | Name without diacritics | name without extension, diacritics removed |
 | Extension without diacritics | extension, diacritics removed |
 | Full name without diacritics | name with extension, diacritics removed |
+| Name with fixed diacritics | name without extension, broken diacritics fixed |
+| Extension with fixed diacritics | extension, broken diacritics fixed |
+| Full name with fixed diacritics | name with extension, broken diacritics fixed |
 
 **"Error loading plugin file! The plugin probably needs some DLLs missing
 on your system."** The plugin needs no extra libraries. Most often it is
@@ -82,11 +95,20 @@ Remove diacritics_ext=[E]
 Remove diacritics_params=0|1|1|1
 ```
 
+Save a second setting `Fix diacritics` the same way, with the mask
+`[=diacritics.Name with fixed diacritics]`:
+
+```ini
+Fix diacritics_name=[=diacritics.Name with fixed diacritics]
+Fix diacritics_ext=[E]
+Fix diacritics_params=0|1|1|1
+```
+
 ## 3. Usage
 
 1. Select files or folders and press **Ctrl+M**.
 2. In the list in the top right corner (or after F2), choose
-   **Remove diacritics**.
+   **Remove diacritics** or **Fix diacritics**.
 3. Check the **New name** column and press **Start!**.
 4. If you don't like the result, the **Undo** button reverts the renaming.
 
@@ -104,6 +126,9 @@ underscores in the **Search for** field.
 - **The Plugin button inserts the field at the cursor.** The old text of the
   mask (`[N]` or a field inserted before) stays. Clear the mask first, or
   the name repeats several times in the preview.
+- **Fixing diacritics only recognizes encoding damage.** It helps with UTF-8
+  names read as DOS 437, 850, 852 or Windows 1250, 1252. Names not damaged
+  this way stay unchanged. Check the result in the preview.
 
 ## 5. Building from source
 
